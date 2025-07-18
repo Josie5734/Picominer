@@ -1,0 +1,62 @@
+current tasks:
+
+
+
+todo:
+
+    energy system
+
+    shops/interactive things to sell/buy/upgrade etc
+
+    upgrade system
+
+    death / fail + respawn
+
+    indicators for unmineable, no ladders etc
+    
+    stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
+
+    have implemented use of a big table for all values of ores, couldnt figure out how to change world gen to use it, may need doing later on in clean up
+
+    improved animation?
+
+    title screens and tutorials?
+
+    ui bar battery sprites
+
+
+ideas:
+
+    stone gravity affected - support beam item
+        while underground: UP place ladder if no ladder already, Z = place support
+
+    a shop where you can go to reset a layer of the mine
+
+    pico version of the big diamond is a jelpi in a block - when mined, jelpi follows you until you get him to the surface
+
+done so far:
+
+    clear inventory and add value to overall when returning to surface
+
+    add items to inventory when mined
+
+    placing ladders + ladder based movement
+
+    mining function
+
+    player gravity
+
+    ui bar (mostly)
+
+    collision
+
+    camera scrolling
+
+    underground filter
+
+    layer0 map
+
+    sprites for blocks (atleast for layer 0)
+
+    layer/map generating algorithm (could be refined/improved later)(doesnt have cracked blocks)
+

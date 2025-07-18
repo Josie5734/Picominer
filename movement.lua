@@ -1,0 +1,153 @@
+--player movement controls for picominer
+
+
+
+function robomove()
+
+    --movement controls 
+
+    if btnp(0) then --left
+        if checkflag("left",0) then --if collision = true
+            if checkflag("left",7) then --if mineable
+                mine(robot.celx - 1, robot.cely) -- dig block  
+                moveleft() --move
+            end
+        else --if collision != true
+            moveleft() --move
+        end
+    end
+
+    if btnp(1) then --right
+        if checkflag("right",0) then 
+            if checkflag("right",7) then 
+                mine(robot.celx + 1, robot.cely) 
+                moveright()
+            end
+        else
+            moveright()
+        end
+    end
+
+    if btnp(2) and robot.underground then --UP 
+        if mget(robot.celx, robot.cely - 1) != 65 then --if block above is not stone
+            if mget(robot.celx, robot.cely) != 113 then --if current block is not ladder
+                if stats.current.ladders > 0 then --if ladder counter > 0 
+                    stats.current.ladders -= 1 --remove 1 ladder from inventory
+                    mset(robot.celx, robot.cely, 113) --place a ladder   --place ladder and ladder -= 1
+                    if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder
+                    moveup()  
+                end --cannot move up
+            else --block is ladder
+                if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder
+                moveup()  
+            end
+        end
+    end
+
+    if btnp(3) then --down
+        if checkflag("down",0) then 
+            if checkflag("down",7) then
+                mine(robot.celx, robot.cely + 1) 
+                movedown()
+            end
+        else
+            movedown()
+        end
+    end 
+    
+end
+
+--animate robot on movement
+function animate(o)
+    if o % 16 != 0 then --every other frame
+        robot.spr = 1
+    else 
+        robot.spr = 2
+    end 
+end
+
+function mine(xx,yy) --xx, yy is block to be mined
+
+    local block = mget(xx,yy) --get sprite number of next block
+    local money = 0
+
+    if block >= 66 and block <= 69 then --if block is an ore
+        if stats.current.inventoryitems < stats.max.inventoryitems then  --if there is space in inventory
+            stats.current.inventoryitems += 1 --add one to inventory item count
+            for ore,vals in pairs(orevalues) do  --iterate through ore table 
+                if vals.sprite == block then money = vals.value end --find sprite value and assign money to the value from that sprite
+            end
+            stats.current.inventoryvalue += money --add money value to inventory
+            printh("mined " .. block)
+        else printh("inventory full, ore destroyed") end --inventory is full
+    end --not an ore
+
+    mset(xx, yy, 0)--mine block
+end
+
+--may need reassessing after movement overhaul
+function gravity()
+    --if block below does not have flag 1 (ladder) and does not have flag 0 (solid)
+    --move robot down by 2 pixels until it stands on one that does
+    if not fget(mget(robot.celx, robot.cely + 1),1) and not checkflag("down",0) then 
+        robot.y += 2
+        robot.cely += 0.25 --move cell position
+        animate(robot.y)
+        screeny += 2  --stops the clipping rectangle from offsetting during movement
+        uibar.ty += 2 --move ui
+        uibar.by += 2
+    end
+
+end
+
+--simple collision
+function checkflag(direction,flag)
+    --stop from moving through blocks
+    local value = false
+
+    --for inputted direction give flag
+    if direction == "left" then value = fget(mget(robot.celx - 1, robot.cely), flag)  
+    elseif direction == "right" then value = fget(mget(robot.celx + 1, robot.cely), flag) 
+    elseif direction == "up" then value = fget(mget(robot.celx, robot.cely - 1), flag) 
+    elseif direction == "down" then value = fget(mget(robot.celx, robot.cely + 1), flag) end 
+
+    return value
+end
+
+--functions for moving (done as function because move is called in 2 possible places, saves like 10 tokens each)
+function moveleft()
+    robot.x -= 8 --move left
+    robot.celx -= 1 --move cell position
+    robot.f = false --dont flip sprite
+    --animation, change sprite each move
+    animate(robot.x)
+    screenx -= 8  --stops the clipping rectangle from offsetting during movement
+    uibar.tx -=8 --move ui
+end
+
+function moveright()
+    robot.x += 8 --move right
+    robot.celx += 1 --move cell position
+    robot.f = true --flip sprite
+    animate(robot.x)
+    screenx += 8  --stops the clipping rectangle from offsetting during movement
+    uibar.tx +=8 --move ui
+end
+
+function moveup()
+    robot.y -= 8 
+    robot.cely -= 1 --move cell position
+    animate(robot.y)
+    screeny -= 8  --stops the clipping rectangle from offsetting during movement
+    uibar.ty -= 8 --move ui
+    uibar.by -= 8
+end
+
+function movedown()
+    robot.y += 8 
+    robot.cely += 1 --move cell position
+    animate(robot.y)
+    screeny += 8  --stops the clipping rectangle from offsetting during movement
+    uibar.ty += 8 --move ui
+    uibar.by += 8
+end
