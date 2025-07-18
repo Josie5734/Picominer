@@ -69,7 +69,8 @@ function _init()
         cely = 8,
         f = false, --flip sprite left/right false/true
         underground = false, --is robot underground
-        ecost = 5 --energy cost of mining a block 
+        ecost = 5, --energy cost of mining a block 
+        falling = false
     }
 
     robot.depth = robot.y / 8

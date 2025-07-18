@@ -28,7 +28,7 @@ function robomove()
         end
     end
 
-    if btnp(2) and robot.underground then --UP 
+    if btnp(2) and robot.underground and not robot.falling then --UP 
         if mget(robot.celx, robot.cely - 1) != 65 then --if block above is not stone
             if mget(robot.celx, robot.cely) != 113 then --if current block is not ladder
                 if stats.current.ladders > 0 then --if ladder counter > 0 
@@ -96,7 +96,8 @@ function gravity()
         screeny += 2  --stops the clipping rectangle from offsetting during movement
         uibar.ty += 2 --move ui
         uibar.by += 2
-    end
+        robot.falling = true --bool for falling to prevent placing ladders while falling
+    else robot.falling = false end 
 
 end
 
