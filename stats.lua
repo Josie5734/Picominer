@@ -23,8 +23,16 @@ function updatestats()
         --reset ladders
         if stats.current.ladders < stats.max.ladders then stats.current.ladders = stats.max.ladders end 
 
+        --reset energy
+        if stats.current.energy < stats.max.energy then stats.current.energy = stats.max.energy end
     end
 
+    --set state fail when energy == 0
+    if stats.current.energy <= 0 and robot.alive then 
+        robot.alive = false 
+        robot.spr = 17
+        printh("dead")
+    end
 
     --update money when selling / buying
 

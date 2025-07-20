@@ -4,13 +4,13 @@ current tasks:
 
 todo:
 
-    energy system
+
 
     shops/interactive things to sell/buy/upgrade etc
 
     upgrade system
 
-    death / fail + respawn
+
 
     indicators for unmineable, no ladders etc
     
@@ -35,6 +35,10 @@ ideas:
     pico version of the big diamond is a jelpi in a block - when mined, jelpi follows you until you get him to the surface
 
 done so far:
+
+    death / fail + respawn
+
+    energy system
 
     clear inventory and add value to overall when returning to surface
 

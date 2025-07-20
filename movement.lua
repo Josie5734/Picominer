@@ -80,7 +80,10 @@ function mine(xx,yy) --xx, yy is block to be mined
             stats.current.inventoryvalue += money --add money value to inventory
             printh("mined " .. block)
         else printh("inventory full, ore destroyed") end --inventory is full
-    end --not an ore
+        for ore,vals in pairs(orevalues) do --iterate to find energy usage for an ore
+            if vals.sprite == block then stats.current.energy -= robot.ecost * vals.ecost end --remove energy 
+        end
+    else stats.current.energy -= robot.ecost end --not an ore, - default ecost
 
     mset(xx, yy, 0)--mine block
 end
@@ -124,6 +127,7 @@ function moveleft()
     animate(robot.x)
     screenx -= 8  --stops the clipping rectangle from offsetting during movement
     uibar.tx -=8 --move ui
+    stats.current.energy -= robot.ecost --use energy for moving
 end
 
 function moveright()
@@ -133,6 +137,7 @@ function moveright()
     animate(robot.x)
     screenx += 8  --stops the clipping rectangle from offsetting during movement
     uibar.tx +=8 --move ui
+    stats.current.energy -= robot.ecost
 end
 
 function moveup()
@@ -142,6 +147,7 @@ function moveup()
     screeny -= 8  --stops the clipping rectangle from offsetting during movement
     uibar.ty -= 8 --move ui
     uibar.by -= 8
+    stats.current.energy -= robot.ecost
 end
 
 function movedown()
@@ -151,4 +157,5 @@ function movedown()
     screeny += 8  --stops the clipping rectangle from offsetting during movement
     uibar.ty += 8 --move ui
     uibar.by += 8
+    stats.current.energy -= robot.ecost
 end

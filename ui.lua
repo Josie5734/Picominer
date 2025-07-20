@@ -37,8 +37,10 @@ function drawui()
     --energy section
     rect(x + 36, toprow, x + 61, y + 6, 6) --energy bar border
     rectfill(x + 37, toprow + 1, x + 60, y + 5, 8) --red behind the green
-    rectfill(x + 37, toprow + 1, x + 37 + stats.current.energyper, y + 5, 11) --energy bar fill
-    
+    if stats.current.energy > 0 then --if energy is more than 0 (prevents negative bar)
+        rectfill(x + 37, toprow + 1, x + 37 + stats.current.energyper, y + 5, 11) --energy bar fill
+    end 
+
     --batteries (currently static, doesnt change with energy)
     spr(9,x + 34, y + 8) 
     spr(9,x + 39, y + 8) 

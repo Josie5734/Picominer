@@ -24,7 +24,8 @@ function _init()
         celh = 64, -- map height in map cells
         levelskyy = 0, --y mapcell positions for each level
         levelgroundy = 12, --where the dirt starts
-        jelpix = 0, jelpiy = 0 --position of the jelpi block
+        jelpix = 0, jelpiy = 0, --position of the jelpi block
+        spawncelx = 64, spawncely = 11 --spawn point in map cells
     }
 
     orevalues = { --table for information on each ore
@@ -32,7 +33,7 @@ function _init()
             sprite = 65, --store sprite location
             rarity = 0.07, --the rarity for worldgen
             value = 0, --the value in coins 
-            ecost = 1, --the multiplier for energy cost (actual ecost = robot.ecost * ore.ecost)
+            ecost = 1, --the multiplier for energy cost (actual ecost = robot.ecost * ore.ecost) (example in stone, not actually applicable)
         },
         copper = {
             sprite = 66,
@@ -50,27 +51,28 @@ function _init()
             sprite = 68,
             rarity = 0.02,
             value = 30,
-            ecost = 1.3
+            ecost = 1.5
         },
         quartz = {
             sprite = 69,
             rarity = 0.01,
             value = 50,
-            ecost = 1.5
+            ecost = 2
         }
     }
 
     --create robot character
     robot = {
         spr = 1, --sprite number
-        x = 64*8, -- exact pixel position
-        y = 8*8,
-        celx = 64, --map cell position
-        cely = 8,
+        x = world.spawncelx*8, -- exact pixel position
+        y = world.spawncely*8,
+        celx = world.spawncelx, --map cell position
+        cely = world.spawncely,
         f = false, --flip sprite left/right false/true
         underground = false, --is robot underground
-        ecost = 5, --energy cost of mining a block 
-        falling = false
+        ecost = 3, --energy cost of mining a block 
+        falling = false,
+        alive = true --alive state
     }
 
     robot.depth = robot.y / 8
@@ -133,11 +135,18 @@ function _update()
     --is the robot underground?
     robot.underground = robot.y > 88 --if the robots head is under the top layer of blocks, trigger underground mode
 
+
     gravity()
 
-    --player movement
-    robomove()
-
+    if robot.alive then
+        --player movement
+        robomove()
+    else --if not alive
+        if btnp(5) then --x to respawn
+            robot.alive = true --reset state
+            respawn()
+        end
+    end
     --stats
     updatestats()
 
@@ -162,6 +171,8 @@ function _draw()
     
     --draw robot
     spr(robot.spr,robot.x,robot.y,1,1,robot.f)
+
+    
     
     --draw ui above or below ground
     if robot.underground then
@@ -170,6 +181,11 @@ function _draw()
         drawui()--draw the ui
     else
         drawui() --draw without clipping anyway
+    end
+
+    if not robot.alive then --print the x to respawn message
+        rect(robot.x - 21, robot.y + 48, robot.x + 40, robot.y + 56, 11)
+        print("❎ to respawn", robot.x - 15, robot.y + 50, 6)
     end
 
 end
@@ -196,5 +212,22 @@ function scrollcam()
     camera(robot.x - 55, robot.y - 55)
 end
 
+function respawn() --reset the robot back to the top
+    printh("respawning")
+    stats.current.energy = stats.max.energy --reset energy
+    stats.current.inventoryitems = 0 --empty inventory
+    stats.current.inventoryvalue = 0
+    
+    --reset position and sprite
+    robot.x, robot.celx = world.spawncelx*8, world.spawncelx 
+    robot.y, robot.cely = world.spawncely*8, world.spawncely
+    robot.spr = 1
 
+    --reset ui
+    screenx, screeny = robot.x + 8 - 63, robot.y + 8 - 63
+    uibar.tx = screenx --x for top left pixel of border edge
+    uibar.ty = screeny + 111 --y for top left pixel of border edge
+    uibar.by = screeny + 127 -- y for bottom right pixel of border edge
+    
+end
 
