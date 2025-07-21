@@ -10,7 +10,7 @@ todo:
 
     upgrade system
 
-
+    status messages (x to respawn, low battery etc)
 
     indicators for unmineable, no ladders etc
     
@@ -22,7 +22,9 @@ todo:
 
     title screens and tutorials?
 
-    ui bar battery sprites
+    ui bar battery sprites or rework 
+
+    zakk feedback: gradual fade on the edge of the dark circle
 
 
 ideas:
