@@ -190,6 +190,8 @@ function _draw()
 
 end
 
+
+
 --function to fill in the corners of the underground filter using a quarter circle sprite on page 4
 --gotten from https://www.lexaloffle.com/bbs/?tid=46286
 function darkscreen()
@@ -217,11 +219,13 @@ function respawn() --reset the robot back to the top
     stats.current.energy = stats.max.energy --reset energy
     stats.current.inventoryitems = 0 --empty inventory
     stats.current.inventoryvalue = 0
-    
-    --reset position and sprite
+
+    robot.spr = 1 --reset sprite
+
+    --reset position - needs system to avoid if spawnblock is empty
     robot.x, robot.celx = world.spawncelx*8, world.spawncelx 
     robot.y, robot.cely = world.spawncely*8, world.spawncely
-    robot.spr = 1
+   
 
     --reset ui
     screenx, screeny = robot.x + 8 - 63, robot.y + 8 - 63

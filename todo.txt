@@ -4,7 +4,9 @@ current tasks:
 
 todo:
 
+    offset spawn to make sure there is a solid block underneath and prevent falling
 
+    maybe lower energy cost for moving 
 
     shops/interactive things to sell/buy/upgrade etc
 
@@ -35,6 +37,16 @@ ideas:
     a shop where you can go to reset a layer of the mine
 
     pico version of the big diamond is a jelpi in a block - when mined, jelpi follows you until you get him to the surface
+
+
+bug list:
+
+    energy system - dont remove energy if block above is surface when going up - prevent dying when moving from -1 to surface
+
+    sometimes digging up removes a ladder above you
+        dig 1 down - ladder up
+        dig block below and go up 
+        places ladder at -2 but removes at -1
 
 done so far:
 
