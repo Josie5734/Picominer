@@ -70,7 +70,7 @@ function _init()
         cely = world.spawncely,
         f = false, --flip sprite left/right false/true
         underground = false, --is robot underground
-        ecost = 3, --energy cost of mining a block 
+        ecost = 2, --default energy cost for moving 
         falling = false,
         alive = true --alive state
     }
