@@ -223,9 +223,26 @@ function respawn() --reset the robot back to the top
     robot.spr = 1 --reset sprite
 
     --reset position - needs system to avoid if spawnblock is empty
-    robot.x, robot.celx = world.spawncelx*8, world.spawncelx 
-    robot.y, robot.cely = world.spawncely*8, world.spawncely
-   
+    
+    --check spawn block
+    local celx, cely = world.spawncelx, world.spawncely + 1
+    local valid = false
+    if fget(mget(celx,cely), 1) then --check block under spawn, if walkable then spawn there
+        robot.x, robot.celx = world.spawncelx*8, world.spawncelx 
+        robot.y, robot.cely = world.spawncely*8, world.spawncely
+    else
+        while not valid do --while block below isnt walkable, move one block left, recheck
+            printh("checking left")
+            if fget(mget(celx,cely), 1) then --if block is solid, spawn
+                robot.x, robot.celx = celx*8, celx 
+                robot.y, robot.cely = (cely - 1)*8, cely - 1
+                valid = true
+            else --else move left by one block
+                celx -= 1
+            end
+        end --repeat until a valid block is found
+    end
+    --could be improved by having a fallback if there is not any solid surface block but that is probably overkill for now
 
     --reset ui
     screenx, screeny = robot.x + 8 - 63, robot.y + 8 - 63

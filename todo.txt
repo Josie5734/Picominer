@@ -4,8 +4,6 @@ current tasks:
 
 todo:
 
-    offset spawn to make sure there is a solid block underneath and prevent falling
-
     maybe lower energy cost for moving 
 
     shops/interactive things to sell/buy/upgrade etc
@@ -41,14 +39,12 @@ ideas:
 
 bug list:
 
+    --this is something that sydney encountered once - i cant seem to recreate it in any way
     energy system - dont remove energy if block above is surface when going up - prevent dying when moving from -1 to surface
 
-    sometimes digging up removes a ladder above you
-        dig 1 down - ladder up
-        dig block below and go up 
-        places ladder at -2 but removes at -1
-
 done so far:
+
+    offset spawn to make sure there is a solid block underneath and prevent falling
 
     death / fail + respawn
 
