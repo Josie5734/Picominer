@@ -14,8 +14,7 @@ TODO - shops/interactive things to sell/buy/upgrade etc
 
 
         when robot on surface: shop hovers 2-3 blocks above robot 
-            maybe flies in from side (opposite side to player relative to middle)
-            e.g player is left of middle, fly from right side and vice versa
+            
         maybe have the prompt to interact in the little respawn prompt box
 
 todo:
@@ -46,7 +45,12 @@ ideas:
 
     a shop where you can go to reset a layer of the mine
 
+    maybe shop flies in from side (opposite side to player relative to middle)
+            e.g player is left of middle, fly from right side and vice versa
+
     pico version of the big diamond is a jelpi in a block - when mined, jelpi follows you until you get him to the surface
+
+    total (of each) ores mined stat tracker?
 
 
 bug list:

@@ -6,7 +6,8 @@
 #include movement.lua
 #include actions.lua
 #include ui.lua
-#include stats.lua ]]
+#include stats.lua 
+#include shop.lua]]
 
 --flags: 0 = collide, 1 = can stand ontop, 7 = mineable
 
@@ -77,12 +78,7 @@ function _init()
 
     robot.depth = robot.y / 8
 
-    shop = {
-        spr = 24, --shop sprite, cycles 24 and 25 or 26 and 27
-        animtimer = 5, --change sprite every 5 seconds
-        x = robot.x, --stays above robot 
-        y = robot.y - 24 --3 blocks above
-    }
+    shopinit()
 
     stats = { --table for tracking game stats
         max = { --max possible values
@@ -143,22 +139,29 @@ function _update()
     --is the robot underground?
     robot.underground = robot.y > 88 --if the robots head is under the top layer of blocks, trigger underground mode
 
+    shopupdate()
 
     gravity()
 
-    if robot.alive then
+    --controls
+    if robot.alive and not shop.open then
         --player movement
         robomove()
-    else --if not alive
+    elseif not robot.alive then --if not alive
         if btnp(5) then --x to respawn
             robot.alive = true --reset state
             respawn()
         end
+    elseif shop.open then --shop menu controls
+        shopcontrols()
     end
+
     --stats
     updatestats()
 
     if not robot.alive then uibar.status = "❎ to respawn" end --respawn button prompt status message
+
+    
 
 end
 
@@ -184,6 +187,9 @@ function _draw()
 
     if not robot.underground then --if robot on surface
         spr(shop.spr, shop.x, shop.y) --draw shop sprite
+        if shop.open then --draw shop ui
+            shopdraw()
+        end
     end
 
     
