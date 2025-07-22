@@ -77,6 +77,13 @@ function _init()
 
     robot.depth = robot.y / 8
 
+    shop = {
+        spr = 24, --shop sprite, cycles 24 and 25 or 26 and 27
+        animtimer = 5, --change sprite every 5 seconds
+        x = robot.x, --stays above robot 
+        y = robot.y - 24 --3 blocks above
+    }
+
     stats = { --table for tracking game stats
         max = { --max possible values
             ladders = 10,    --number of ladders
@@ -109,6 +116,7 @@ function _init()
         tx = screenx, --x for top left pixel of border edge
         ty = screeny + 111, --y for top left pixel of border edge
         by = screeny + 127, -- y for bottom right pixel of border edge
+        status = "" --status bar message
     }
     
     --variable for the dark clip mask when underground
@@ -150,6 +158,8 @@ function _update()
     --stats
     updatestats()
 
+    if not robot.alive then uibar.status = "❎ to respawn" end --respawn button prompt status message
+
 end
 
 
@@ -172,6 +182,10 @@ function _draw()
     --draw robot
     spr(robot.spr,robot.x,robot.y,1,1,robot.f)
 
+    if not robot.underground then --if robot on surface
+        spr(shop.spr, shop.x, shop.y) --draw shop sprite
+    end
+
     
     
     --draw ui above or below ground
@@ -181,11 +195,6 @@ function _draw()
         drawui()--draw the ui
     else
         drawui() --draw without clipping anyway
-    end
-
-    if not robot.alive then --print the x to respawn message
-        rect(robot.x - 21, robot.y + 48, robot.x + 40, robot.y + 56, 11)
-        print("❎ to respawn", robot.x - 15, robot.y + 50, 6)
     end
 
 end
@@ -219,6 +228,8 @@ function respawn() --reset the robot back to the top
     stats.current.energy = stats.max.energy --reset energy
     stats.current.inventoryitems = 0 --empty inventory
     stats.current.inventoryvalue = 0
+
+    uibar.status = "" --reset status bar message
 
     robot.spr = 1 --reset sprite
 

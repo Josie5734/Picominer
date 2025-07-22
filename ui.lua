@@ -82,6 +82,11 @@ function drawui()
         print(stats.current.depth, x + 119, y + 10, 6)
     end
 
+    --status box
+    rect(x, y - 8, x + 127, y, 11) --outline
+    rectfill(x + 1, y - 7, x + 126, y - 1, 0) --fill
+    print(uibar.status, (x + 64) - (#uibar.status * 2), robot.y + 50, 6) --centered print
+
 
 end
 

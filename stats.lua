@@ -34,7 +34,16 @@ function updatestats()
         printh("dead")
     end
 
-    --update money when selling / buying
+    --status message
+    if not robot.underground then --if on surface, give prompt for shop in status bar
+        uibar.status = "🅾️ to open shop"  
+    elseif stats.current.energy < stats.max.energy / 10 then --10% energy
+        uibar.status = "low energy"
+    elseif stats.current.ladders == 3 then --3 ladders left - should only show for 3 ladders, allows for low energy to have priority
+        uibar.status = "low ladders"
+    else uibar.status = "" end --no status to report
+
+    shop.x = robot.x --update shop position
 
 end
 

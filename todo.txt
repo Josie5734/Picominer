@@ -1,10 +1,24 @@
 current tasks:
 
-TODO - 
+TODO - shops/interactive things to sell/buy/upgrade etc
+
+    plan:
+        shop for upgrades - sprites 24-27
+        press z to interact when infront of it
+        bring up a ui 
+        up/down to navigate list of upgrades, z to buy, x to exit 
+        design: flying robot thingy? extends a wire down when interacting and flashes wire when buying
+        has a 2 frame animation to show the side jets 
+        2 versions - red chest light - no interaction
+                    - green light - currently interacting
+
+
+        when robot on surface: shop hovers 2-3 blocks above robot 
+            maybe flies in from side (opposite side to player relative to middle)
+            e.g player is left of middle, fly from right side and vice versa
+        maybe have the prompt to interact in the little respawn prompt box
 
 todo:
-
-    shops/interactive things to sell/buy/upgrade etc
 
     upgrade system
 
