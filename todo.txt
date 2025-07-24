@@ -1,35 +1,12 @@
 current tasks:
 
-just done:
-    added selection upgrade feature in shop
-    next - remove money from inv, fix bug*
-        * if stat is at max, error occurs when pressing upgrade again 
-
-TODO - shops/interactive things to sell/buy/upgrade etc
-
-    plan:
-        shop for upgrades - sprites 24-27
-        press z to interact when infront of it
-        bring up a ui 
-        up/down to navigate list of upgrades, z to buy, x to exit 
-        design: flying robot thingy? extends a wire down when interacting and flashes wire when buying
-        has a 2 frame animation to show the side jets 
-        2 versions - red chest light - no interaction
-                    - green light - currently interacting
-
-        3am idea - maybe just make each upgrade option take up the whole box and then scroll to the next one 
-            can get more info per box that way - use little arrow sprites to indicate scrolling
-
-
-        when robot on surface: shop hovers 2-3 blocks above robot 
-            
-        maybe have the prompt to interact in the little respawn prompt box
-
 todo:
 
     upgrade system
 
     status messages (x to respawn, low battery etc)
+
+    hide the underground when on the surface
 
     fall damage (could be done by having a counter in gravity(), if over x amount when reaching ground, fall damage and die, else reset )
 
@@ -72,6 +49,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    shop and upgrade system
 
     offset spawn to make sure there is a solid block underneath and prevent falling
 

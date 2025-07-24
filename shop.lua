@@ -53,6 +53,7 @@ function shopupdate()
             if shop.spr == 24 then shop.spr = 25 else shop.spr = 24 end --switch sprite
         end 
         shop.animtimer += 1 --iterate animation timer 
+        if shop.animtimer < 1000 then shop.animtimer = 0 end --reset to prevent a too large number
 
         if btnp(4) and not shop.open then --open shop menu
             shop.open = true 
@@ -99,7 +100,7 @@ function drawpage(upgrade,x,y) --draw the text in the shop page for an upgrade -
     local mid = x + 24 --middle point for centering texts
     local string = upgrade --string stored for the length calculation
     print(string, mid - (#string * 2), y + 10, 6) --upgrade name
-    string = "current: " .. upgrades[upgrade].current
+    if upgrades[upgrade].current == 5 then string = "current: max" else string = "current: " .. upgrades[upgrade].current end
     print(string, mid - (#string * 2), y + 16, 6) --current level
     string = "next: " .. upgrades[upgrade].next 
     print(string, mid - (#string * 2), y + 22, 6) --next level
@@ -131,8 +132,12 @@ function shopcontrols()
         shop.currentitem = shop.itemlist[shop.itemcounter]
     end
 
-    if btnp(5) then --X - select item if not max
-        shopupgrade(shop.currentitem)
+    if btnp(5) then --X - select item if not max and has enough money
+        if upgrades[shop.currentitem].current < 5 then 
+            if stats.current.money > upgrades[shop.currentitem].cost then
+                shopupgrade(shop.currentitem)
+            else printh("not enough money") end --maybe add a visual indicator of not enough money
+        end
     end
 
 end
@@ -140,6 +145,8 @@ end
 --function to upgrade a stat
 function shopupgrade(upgrade)
     printh("upgrading " .. upgrade)
+
+    stats.current.money -= upgrades[upgrade].cost --spend money
 
     if upgrade == "energy" then --increase the stats.max value for the given upgrade
         stats.max.energy += upgrades[upgrade].statinc 
@@ -152,10 +159,12 @@ function shopupgrade(upgrade)
     end
 
     --increase relevant values
-    if not upgrades[upgrade].current == "max" or upgrades[upgrade].current + 1 < 5 then
-        upgrades[upgrade].current += 1
-        upgrades[upgrade].next += 1
-        upgrades[upgrade].cost += upgrades[upgrade].costinc 
-    else upgrades[upgrade].current = "max" end 
+    upgrades[upgrade].current += 1
+    upgrades[upgrade].next += 1
+    upgrades[upgrade].cost += upgrades[upgrade].costinc 
+    if upgrades[upgrade].next == 6 then
+        upgrades[upgrade].next = "X" 
+        upgrades[upgrade].cost = "X"
+    end --set next to a 'nil' when maxxed
 
 end
