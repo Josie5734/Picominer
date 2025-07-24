@@ -1,28 +1,32 @@
 current tasks:
 
-todo:
-
-    upgrade system
-
-    status messages (x to respawn, low battery etc)
-
     hide the underground when on the surface
+
+todo:
 
     fall damage (could be done by having a counter in gravity(), if over x amount when reaching ground, fall damage and die, else reset )
 
     indicators for unmineable, no ladders etc
     
     stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
+        would also have to add supports to upgrade system if added
 
     have implemented use of a big table for all values of ores, couldnt figure out how to change world gen to use it, may need doing later on in clean up
 
-    improved animation?
+    jelpi block functionality
 
     title screens and tutorials?
 
-    ui bar battery sprites or rework 
 
-    zakk feedback: gradual fade on the edge of the dark circle
+    improvements on already done features:
+
+        improved animation?
+
+        ui bar battery sprites or rework 
+
+        clean up of code in general
+
+        zakk feedback: gradual fade on the edge of the dark circle
 
 
 ideas:
@@ -49,6 +53,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    status messages (x to respawn, low battery etc)
 
     shop and upgrade system
 
