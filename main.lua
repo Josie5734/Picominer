@@ -73,7 +73,7 @@ function _init()
         underground = false, --is robot underground
         ecost = 2, --default energy cost for moving 
         falling = false,
-        alive = true --alive state
+        alive = true, --alive state
     }
 
     robot.depth = robot.y / 8
@@ -87,6 +87,7 @@ function _init()
             money = 32750, --pico integer limit
             inventoryitems = 10, --how much items in inventory
             energy = 100, --energy count
+            falldist = 4 --max fall height before death - if fall > falldist then die 
         }, 
         current = { --current values
             ladders = 10,    --number of ladders
@@ -98,6 +99,7 @@ function _init()
             energy = 100, --energy count
             energyper = 100,  --percent of battery for bat bar
             depth = robot.cely - 11, --depth
+            falldist = 0 --max fall height before death - if fall > falldist then die 
         },
     } 
     stats.current.inventoryper = (5 * stats.current.inventoryitems) / stats.max.inventoryitems --was hadrcoded to 10 but i think this variable should be right
