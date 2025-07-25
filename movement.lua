@@ -147,7 +147,7 @@ function moveup()
     screeny -= 8  --stops the clipping rectangle from offsetting during movement
     uibar.ty -= 8 --move ui
     uibar.by -= 8
-    stats.current.energy -= robot.ecost
+    if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
 end
 
 function movedown()

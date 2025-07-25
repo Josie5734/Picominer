@@ -203,6 +203,7 @@ function _draw()
         drawui()--draw the ui
     else
         drawui() --draw without clipping anyway
+        rectfill(robot.x-55, robot.y+24,robot.x+72,robot.y+47,0)--rectangle to cover the underground when on the surface
     end
 
 end

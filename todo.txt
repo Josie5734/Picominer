@@ -7,6 +7,8 @@ todo:
     fall damage (could be done by having a counter in gravity(), if over x amount when reaching ground, fall damage and die, else reset )
 
     indicators for unmineable, no ladders etc
+
+    darkcircle upgrade 
     
     stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
         would also have to add supports to upgrade system if added
@@ -14,6 +16,8 @@ todo:
     have implemented use of a big table for all values of ores, couldnt figure out how to change world gen to use it, may need doing later on in clean up
 
     jelpi block functionality
+
+    sound effects + music
 
     title screens and tutorials?
 
