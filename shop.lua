@@ -47,24 +47,26 @@ end
 
 function shopupdate()
 
+    shop.animtimer += 1 --iterate animation timer 
+
     --update shop sprite
-    if not robot.underground then
-        if shop.animtimer % 5 == 0 then --every 5 frames
-            if shop.spr == 24 then shop.spr = 25 else shop.spr = 24 end --switch sprite
-        end 
-        shop.animtimer += 1 --iterate animation timer 
-        if shop.animtimer < 1000 then shop.animtimer = 0 end --reset to prevent a too large number
+    if shop.animtimer % 10 == 0 then --every 5 frames
+        if shop.spr == 24 then shop.spr = 25 else shop.spr = 24 end --switch sprite
+    else
+        if shop.animtimer > 1000 then shop.animtimer = 0 end --reset to prevent a too large number
+    end 
 
-        if btnp(4) and not shop.open then --open shop menu
-            shop.open = true 
-            printh("shop opened") 
-        elseif shop.open and btnp(4) then --close shop menu
-            shop.open = false 
-            printh("shop closed") 
-        end 
-    end
-
+    if btnp(4) and not shop.open then --open shop menu
+        shop.open = true 
+        printh("shop opened") 
+    elseif shop.open and btnp(4) then --close shop menu
+        shop.open = false 
+        printh("shop closed") 
+    end 
     
+
+    printh(shop.animtimer)
+    printh(shop.spr)
 
 end
 
@@ -84,15 +86,6 @@ function shopdraw()
     spr(13,topx+39,topy + 2,1,1,true) --right arrow
 
     drawpage(shop.currentitem,topx,topy)
-    --layout for shop
-    --is going to be on the right
-    --robot has 8 tiles to the right - make shop 6 wide with 1 on either side
-    --an have 3 options shown at once
-    --vertical height undecided
-    --may need some contrasting border colors if the bottom goes over the dirt layer
-
-    --upgrades to be listed:
-        --battery, inventory, ladders&supports, fall distance, pointer to jelpi block
 
 end
 

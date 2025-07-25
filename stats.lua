@@ -41,6 +41,8 @@ function updatestats()
         uibar.status = "low energy"
     elseif stats.current.ladders == 3 then --3 ladders left - should only show for 3 ladders, allows for low energy to have priority
         uibar.status = "low ladders"
+    elseif uibar.status == "unbreakable" then --tried to mine stone
+        if uibar.statuscount > 10 then uibar.status = "" uibar.statuscount = 0 else uibar.statuscount += 1 end --iterate counter or reset message
     else uibar.status = "" end --no status to report
 
     shop.x = robot.x --update shop position

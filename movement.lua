@@ -11,7 +11,7 @@ function robomove()
             if checkflag("left",7) then --if mineable
                 mine(robot.celx - 1, robot.cely) -- dig block  
                 moveleft() --move
-            end
+            else uibar.status = "unbreakable" end --status message for not breakable
         else --if collision != true
             moveleft() --move
         end
@@ -22,7 +22,7 @@ function robomove()
             if checkflag("right",7) then 
                 mine(robot.celx + 1, robot.cely) 
                 moveright()
-            end
+            else uibar.status = "unbreakable" end --status message for not breakable
         else
             moveright()
         end
@@ -41,7 +41,7 @@ function robomove()
                 if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder
                 moveup()  
             end
-        end
+        else uibar.status = "unbreakable" end --status message for not breakable
     end
 
     if btnp(3) then --down
@@ -49,7 +49,7 @@ function robomove()
             if checkflag("down",7) then
                 mine(robot.celx, robot.cely + 1) 
                 movedown()
-            end
+            else uibar.status = "unbreakable" end --status message for not breakable
         else
             movedown()
         end

@@ -114,7 +114,8 @@ function _init()
         tx = screenx, --x for top left pixel of border edge
         ty = screeny + 111, --y for top left pixel of border edge
         by = screeny + 127, -- y for bottom right pixel of border edge
-        status = "" --status bar message
+        status = "", --status bar message
+        statuscount = 0 --counter for uibar where applicable
     }
     
     --variable for the dark clip mask when underground
@@ -141,7 +142,9 @@ function _update()
     --is the robot underground?
     robot.underground = robot.y > 88 --if the robots head is under the top layer of blocks, trigger underground mode
 
-    shopupdate()
+    if not robot.underground then --only update shop if on surface
+        shopupdate()
+    end 
 
     gravity()
 
