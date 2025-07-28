@@ -100,7 +100,14 @@ function gravity()
         uibar.ty += 2 --move ui
         uibar.by += 2
         robot.falling = true --bool for falling to prevent placing ladders while falling
-    else robot.falling = false end 
+        stats.current.falldist += 0.25 --add blocks fallen
+    else 
+        if stats.current.falldist > stats.max.falldist then --check falldist
+            robot.alive = false --die if fell too far
+        end
+        robot.falling = false 
+        stats.current.falldist = 0 --reset fall distance
+    end 
 
 end
 

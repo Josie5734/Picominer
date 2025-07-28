@@ -153,6 +153,7 @@ function _update()
         --player movement
         robomove()
     elseif not robot.alive then --if not alive
+        robot.spr = 17 --death sprite
         if btnp(5) then --x to respawn
             robot.alive = true --reset state
             respawn()
