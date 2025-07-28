@@ -117,6 +117,13 @@ function _init()
         status = "", --status bar message
         statuscount = 0 --counter for uibar where applicable
     }
+
+    visiondata = { --stats for the clipping rectangle 
+        x = robot.x - 12 - screenx, --rectangle x coord
+        y = robot.y - 12 - screeny, --rectangle y coord
+        size = 32, --rectangle size
+        myr = 16 --circle radius size
+    }
     
     --variable for the dark clip mask when underground
     darkmask = false
@@ -178,7 +185,7 @@ function _draw()
 
     --has to be done after cls() but before anything else
     if robot.underground then --set the clipping rectangle for underground filter
-        clip(robot.x - 12 - screenx, robot.y - 12 - screeny, 32, 32) --robot.x - 12,robot.y - 12    robot.x - 16 ,robot.y - 16
+        clip(visiondata.x, visiondata.y, visiondata.size, visiondata.size) 
     end
     
     rectfill(0,0,1024,512,3) --draws darker background layer
@@ -203,7 +210,7 @@ function _draw()
     --draw ui above or below ground
     if robot.underground then
         clip() --reset clip mask for ui to go over top
-        darkscreen() --fill in rectangle to a circle
+        darkscreen(visiondata.myr) --fill in rectangle to a circle
         drawui()--draw the ui
     else
         drawui() --draw without clipping anyway
@@ -216,12 +223,12 @@ end
 
 --function to fill in the corners of the underground filter using a quarter circle sprite on page 4
 --gotten from https://www.lexaloffle.com/bbs/?tid=46286
-function darkscreen()
+function darkscreen(radius)
     palt(10,true)
     palt(0,false)
     local myx = robot.x + 4
     local myy = robot.y + 4 
-    local myr = 16
+    local myr = radius --default = 16
     local sx = 112 --(110 % 16) * 8 
     local sy = 48--(110 \ 16) * 8
     sspr(sx,sy,16,16,myx-myr,myy-myr,myr,myr)
@@ -230,6 +237,7 @@ function darkscreen()
     sspr(sx,sy,16,16,myx,myy,myr,myr,true,true)
     palt()
 end 
+
 
 --function to scroll the camera, keeping player locked in center
 function scrollcam()

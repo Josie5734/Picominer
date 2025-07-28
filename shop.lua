@@ -8,7 +8,7 @@ function shopinit()
         x = robot.x, --stays above robot 
         y = robot.y - 24, --3 blocks above
         open = false, --shop menu open state
-        itemlist={"energy","ladders","inventory","falldist"},
+        itemlist={"energy","ladders","inventory","falldist","visionette"},
         currentitem = "energy", -- the upgrade to show
         itemcounter = 1 --counter for the itemlist
     }
@@ -40,6 +40,13 @@ function shopinit()
             cost = 500,
             costinc = 500,
             statinc = 2,
+        },
+        visionette = {
+            current = 1,
+            next = 2,
+            cost = 750,
+            costinc = 1000,
+            statinc = 4 --make half block wider, needs 1x for x/y coord and radius, 2x for size
         }
     }
 
@@ -56,6 +63,7 @@ function shopupdate()
         if shop.animtimer > 1000 then shop.animtimer = 0 end --reset to prevent a too large number
     end 
 
+    --open/close menu
     if btnp(4) and not shop.open then --open shop menu
         shop.open = true 
         printh("shop opened") 
@@ -63,10 +71,6 @@ function shopupdate()
         shop.open = false 
         printh("shop closed") 
     end 
-    
-
-    printh(shop.animtimer)
-    printh(shop.spr)
 
 end
 
@@ -112,7 +116,7 @@ function shopcontrols()
     end 
 
     if btnp(1) then --right - scroll right
-        if shop.itemcounter == 4 then 
+        if shop.itemcounter == 5 then 
             shop.itemcounter = 1
         else shop.itemcounter += 1 end 
         shop.currentitem = shop.itemlist[shop.itemcounter]
@@ -120,12 +124,12 @@ function shopcontrols()
 
     if btnp(0) then --left - scroll left
         if shop.itemcounter == 1 then 
-            shop.itemcounter = 4
+            shop.itemcounter = 5
         else shop.itemcounter -= 1 end 
         shop.currentitem = shop.itemlist[shop.itemcounter]
     end
 
-    if btnp(5) then --X - select item if not max and has enough money
+    if btnp(5) then --X - select item if not max level and has enough money
         if upgrades[shop.currentitem].current < 5 then 
             if stats.current.money > upgrades[shop.currentitem].cost then
                 shopupgrade(shop.currentitem)
@@ -149,6 +153,11 @@ function shopupgrade(upgrade)
         stats.max.inventoryitems += upgrades[upgrade].statinc 
     elseif upgrade == "falldist" then 
         stats.max.falldist += upgrades[upgrade].statinc
+    elseif upgrade == "visionette" then 
+        visiondata.x -= upgrades[upgrade].statinc
+        visiondata.y -= upgrades[upgrade].statinc
+        visiondata.size += upgrades[upgrade].statinc * 2
+        visiondata.myr += upgrades[upgrade].statinc
     end
 
     --increase relevant values

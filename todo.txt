@@ -1,6 +1,6 @@
 current tasks:
 
-    darkcircle upgrade option in shop
+
 
 todo:
     
@@ -57,6 +57,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    darkcircle upgrade option in shop
 
     fall damage
 
