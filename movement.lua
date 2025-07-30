@@ -9,6 +9,10 @@ function robomove()
     if btnp(0) then --left
         if checkflag("left",0) then --if collision = true
             if checkflag("left",7) then --if mineable
+                if checkflag("left",2) then --if block is jelpiblock, spawn jelpi
+                    jelpi.alive = true
+                    jelpi.follow = true
+                end
                 mine(robot.celx - 1, robot.cely) -- dig block  
                 moveleft() --move
             else uibar.status = "unbreakable" end --status message for not breakable
@@ -20,6 +24,10 @@ function robomove()
     if btnp(1) then --right
         if checkflag("right",0) then 
             if checkflag("right",7) then 
+                if checkflag("right",2) then --if block is jelpiblock, spawn jelpi
+                    jelpi.alive = true
+                    jelpi.follow = true
+                end
                 mine(robot.celx + 1, robot.cely) 
                 moveright()
             else uibar.status = "unbreakable" end --status message for not breakable
@@ -34,7 +42,14 @@ function robomove()
                 if stats.current.ladders > 0 then --if ladder counter > 0 
                     stats.current.ladders -= 1 --remove 1 ladder from inventory
                     mset(robot.celx, robot.cely, 113) --place a ladder   --place ladder and ladder -= 1
-                    if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder
+                    if checkflag("up",2) then --if block is jelpiblock, spawn jelpi
+                        jelpi.alive = true
+                        jelpi.follow = true
+                    end
+                    if checkflag("up",6) == false then --mine block above if it isnt air/ladder
+                        mine(robot.celx, robot.cely - 1) 
+                    end 
+
                     moveup()  
                 end --cannot move up
             else --block is ladder
@@ -47,6 +62,10 @@ function robomove()
     if btnp(3) then --down
         if checkflag("down",0) then 
             if checkflag("down",7) then
+                if checkflag("down",2) then --if block is jelpiblock, spawn jelpi
+                    jelpi.alive = true
+                    jelpi.follow = true
+                end
                 mine(robot.celx, robot.cely + 1) 
                 movedown()
             else uibar.status = "unbreakable" end --status message for not breakable
@@ -64,6 +83,10 @@ function animate(o)
     else 
         robot.spr = 2
     end 
+
+    --jelpi animation
+    if jelpi.spr < 52 then jelpi.spr += 1 elseif jelpi.spr == 52 then jelpi.spr = 49 end --move sprite along
+
 end
 
 function mine(xx,yy) --xx, yy is block to be mined
@@ -100,6 +123,7 @@ function gravity()
         uibar.ty += 2 --move ui
         uibar.by += 2
         robot.falling = true --bool for falling to prevent placing ladders while falling
+        robot.direction = "down" --set direction 
         stats.current.falldist += 0.25 --add blocks fallen
     else 
         if stats.current.falldist > stats.max.falldist then --check falldist
@@ -135,6 +159,7 @@ function moveleft()
     screenx -= 8  --stops the clipping rectangle from offsetting during movement
     uibar.tx -=8 --move ui
     stats.current.energy -= robot.ecost --use energy for moving
+    robot.direction = "left" --direction moved
 end
 
 function moveright()
@@ -145,6 +170,7 @@ function moveright()
     screenx += 8  --stops the clipping rectangle from offsetting during movement
     uibar.tx +=8 --move ui
     stats.current.energy -= robot.ecost
+    robot.direction = "right" --direction moved
 end
 
 function moveup()
@@ -154,6 +180,7 @@ function moveup()
     screeny -= 8  --stops the clipping rectangle from offsetting during movement
     uibar.ty -= 8 --move ui
     uibar.by -= 8
+    robot.direction = "up" --direction moved
     if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
 end
 
@@ -164,5 +191,6 @@ function movedown()
     screeny += 8  --stops the clipping rectangle from offsetting during movement
     uibar.ty += 8 --move ui
     uibar.by += 8
+    robot.direction = "down" --direction moved
     stats.current.energy -= robot.ecost
 end

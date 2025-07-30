@@ -9,7 +9,7 @@
 #include stats.lua 
 #include shop.lua]]
 
---flags: 0 = collide, 1 = can stand ontop, 7 = mineable
+--flags: 0 = collide, 1 = can stand ontop, 2 = jelpiblock, 7 = mineable
 
 function _init()
 
@@ -62,6 +62,13 @@ function _init()
         }
     }
 
+    --world generation
+    worldgeneration(world.x+1, world.levelgroundy, 126, 64-12-1)
+    world.jelpix = 64 --flr(rnd(128)) --anywhere on the x axis
+    world.jelpiy = 15 --flr(rnd(26) + 26) --in the bottom half of y axis
+    mset(world.jelpix, world.jelpiy, 70)
+    printh("world generated")
+
     --create robot character
     robot = {
         spr = 1, --sprite number
@@ -72,11 +79,24 @@ function _init()
         f = false, --flip sprite left/right false/true
         underground = false, --is robot underground
         ecost = 2, --default energy cost for moving 
-        falling = false,
+        falling = false, --is robot falling
+        direction = "", --what was the last direction moved
         alive = true, --alive state
     }
 
     robot.depth = robot.y / 8
+
+    --stats for jelpi
+    jelpi = {
+        spr = 49, --sprite numner
+        f = false, --flip sprite
+        x = world.jelpix * 8, --exact x position
+        y = world.jelpiy * 8, --exact y position
+        celx = world.jelpix, --celx position
+        cely = world.jelpiy, --cely position
+        alive = false, --has jelpi been spawned from the block
+        follow = false --is jelpi following the robot
+    }
 
     shopinit()
 
@@ -131,12 +151,7 @@ function _init()
     --camera set to robot position
     scrollcam()
 
-    --world generation
-    worldgeneration(world.x+1, world.levelgroundy, 126, 64-12-1)
-    world.jelpix = flr(rnd(128)) --anywhere on the x axis
-    world.jelpiy = flr(rnd(26) + 26) --in the bottom half of y axis
-    mset(world.jelpix, world.jelpiy, 70)
-    printh("world generated")
+    
 
     --clear last thing
     cls()
@@ -174,6 +189,15 @@ function _update()
 
     if not robot.alive then uibar.status = "❎ to respawn" end --respawn button prompt status message
 
+    --jelpi update
+    if jelpi.alive then
+        if jelpi.follow then 
+            jelpimove(robot.direction)
+        end
+    end
+
+    printh("robot at " .. robot.celx .. " " .. jelpi.cely)
+    printh("jelpi is at " .. jelpi.celx .. " " .. jelpi.cely)
     
 
 end
@@ -205,7 +229,10 @@ function _draw()
         end
     end
 
-    
+    --jelpi draw
+    if jelpi.alive then
+        spr(jelpi.spr, jelpi.x, jelpi.y,1,1,jelpi.f)
+    end
     
     --draw ui above or below ground
     if robot.underground then
