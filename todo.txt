@@ -1,20 +1,26 @@
 current tasks:
 
+    jelpi block functionality:
 
+    when broken, little jelpi spawns and follows the player 
+        -stands in the last block that the player was in to avoid having to work out where to place him
+
+    player has to take jelpi to the surface in order to 'win'
+
+    if player dies before jelpi reaches the surface, jelpi waits at the death location to be picked up again
+
+    no real consequence to losing him, it is already hard enough to find the block and just not really worth it 
 
 todo:
     
     stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
         would also have to add supports to upgrade system if added
 
-
-    jelpi block functionality
-
     sound effects + music
 
     balancing and testing (stats and money costs etc)
 
-    title screens and tutorials?
+    title screens and tutorials? + win visuals?
 
     
 
@@ -24,6 +30,8 @@ todo:
         improved animations? not sure i kind of like the current ones as they are
 
         ui bar battery sprites or rework 
+
+        better ore distribution - e.g better ores are much rare in higher layers and get more common further down like minecraft
 
         clean up of code in general
 
@@ -35,17 +43,10 @@ todo:
 
 ideas:
 
-    stone gravity affected - support beam item
-        while underground: UP place ladder if no ladder already, Z = place support
-
-    a shop where you can go to reset a layer of the mine
-
     maybe shop flies in from side (opposite side to player relative to middle)
             e.g player is left of middle, fly from right side and vice versa
 
-    pico version of the big diamond is a jelpi in a block - when mined, jelpi follows you until you get him to the surface
-
-    total (of each) ores mined stat tracker?
+    total (of each) ores mined stat tracker? and other stats too
 
 
 bug list:
