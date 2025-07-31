@@ -9,10 +9,15 @@ current tasks:
 
     if player dies before jelpi reaches the surface, jelpi waits at the death location to be picked up again
 
-    no real consequence to losing him, it is already hard enough to find the block and just not really worth it 
+    no real consequence to losing him, it is already hard enough to find the block and just not really worth it
+
+    could have a little building on the surface for where jelpi lives - environmental storytelling for the missing jelpi
+        could have hints at the jelpi block - maybe pay to reveal things
+
+    could potentially have the option to have jelpi follow you again after being saved, altho that kind of depends on what the end of the game is since there is no real motive to play after finding jelpi  
 
     done: spawning, moving
-    next: reaching surface behaviour
+    next: reaching surface behaviour, robot dies behaviour
 
 todo:
     

@@ -138,15 +138,18 @@ function _update()
     if not robot.alive then uibar.status = "❎ to respawn" end --respawn button prompt status message
 
     --jelpi update
-    if jelpi.alive then
-        if jelpi.follow then 
-            jelpimove(robot.direction)
-        end
+    if jelpi.alive then --jelpi alive
+        if not jelpi.saved then --if not saved
+            if jelpi.follow then --if currently following
+                jelpimove(robot.direction)
+                if not robot.underground and jelpi.cely < 12 then --if both on surface
+                    --maybe have a thing to make him move to his house
+                    jelpi.saved = true --set state as saved
+                    jelpi.follow = false --stop following
+                end --jelpi has been saved
+            end 
+        else jelpidance() end --else saved, do dance animation
     end
-
-    printh("robot at " .. robot.celx .. " " .. jelpi.cely)
-    printh("jelpi is at " .. jelpi.celx .. " " .. jelpi.cely)
-    
 
 end
 
@@ -180,6 +183,10 @@ function _draw()
     --jelpi draw
     if jelpi.alive then
         spr(jelpi.spr, jelpi.x, jelpi.y,1,1,jelpi.f)
+
+        if jelpi.saved then --draw saved speech bubble
+            jelpisaved()
+        end
     end
     
     --draw ui above or below ground

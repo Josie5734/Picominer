@@ -1,20 +1,9 @@
 --page for all jelpiblock related code
 
---[[
-what is needed?
-
-jelpi movement function
-
-animation function
-
-behaviour when reaching the surface
-
-behaviour when robot dies
-]]
-
 function jelpiinit() --inital jelpi data creation
     jelpi = {
         spr = 49, --sprite numner
+        frame = 0, --frame counter used for winning dance animation
         f = false, --flip sprite
         x = world.jelpix * 8, --exact x position
         y = world.jelpiy * 8, --exact y position
@@ -55,14 +44,24 @@ function jelpimove(direction)
 
 end
 
-function jelpianimate()
+function jelpidance()
+
+    jelpi.frame += 1
+
+    if jelpi.frame % 10 == 0 then --advance animation position every 10 frames
+        if jelpi.spr < 52 then 
+            jelpi.spr += 1
+        else jelpi.spr = 49 end
+    elseif jelpi.frame > 1000 then jelpi.frame = 0 end --reset counter to avoid too large integer
 
 end
 
-function jelpisurface()
+function jelpisaved()
 
-end
-
-function jelpiwait()
+    --draw speech bubble
+    palt(10,true)
+    palt(0,false)
+    spr(78,jelpi.x - 5, jelpi.y - 16,2,2)
+    palt()
 
 end
