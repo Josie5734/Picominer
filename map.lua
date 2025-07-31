@@ -1,5 +1,50 @@
 --map generation 
 
+function worldinit() --initialise data for the map
+    world = {
+        x = 0, --x 
+        celw = 128, --map width in map cells
+        celh = 64, -- map height in map cells
+        levelskyy = 0, --y mapcell positions for each level
+        levelgroundy = 12, --where the dirt starts
+        jelpix = 0, jelpiy = 0, --position of the jelpi block
+        spawncelx = 64, spawncely = 11 --spawn point in map cells
+    }
+
+    orevalues = { --table for information on each ore
+        stone = { --each ore has its own subtable
+            sprite = 65, --store sprite location
+            rarity = 0.07, --the rarity for worldgen
+            value = 0, --the value in coins 
+            ecost = 1, --the multiplier for energy cost (actual ecost = robot.ecost * ore.ecost) (example in stone, not actually applicable)
+        },
+        copper = {
+            sprite = 66,
+            rarity = 0.03,
+            value = 10,
+            ecost = 1.1
+        },
+        gold = {
+            sprite = 67,
+            rarity = 0.02,
+            value = 20,
+            ecost = 1.25
+        },
+        cobalt = {
+            sprite = 68,
+            rarity = 0.02,
+            value = 30,
+            ecost = 1.5
+        },
+        quartz = {
+            sprite = 69,
+            rarity = 0.01,
+            value = 50,
+            ecost = 2
+        }
+    }
+end
+
 --generates all the ores in the world
 function worldgeneration(x,y,w,h)
     local total = w * h

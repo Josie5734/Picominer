@@ -11,6 +11,9 @@ current tasks:
 
     no real consequence to losing him, it is already hard enough to find the block and just not really worth it 
 
+    done: spawning, moving
+    next: reaching surface behaviour
+
 todo:
     
     stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)

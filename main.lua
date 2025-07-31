@@ -19,48 +19,7 @@ function _init()
     pal(2,140, 1) --change color 2 to color 140 (darker blue shade)
 
     --map values
-    world = {
-        x = 0, --x 
-        celw = 128, --map width in map cells
-        celh = 64, -- map height in map cells
-        levelskyy = 0, --y mapcell positions for each level
-        levelgroundy = 12, --where the dirt starts
-        jelpix = 0, jelpiy = 0, --position of the jelpi block
-        spawncelx = 64, spawncely = 11 --spawn point in map cells
-    }
-
-    orevalues = { --table for information on each ore
-        stone = { --each ore has its own subtable
-            sprite = 65, --store sprite location
-            rarity = 0.07, --the rarity for worldgen
-            value = 0, --the value in coins 
-            ecost = 1, --the multiplier for energy cost (actual ecost = robot.ecost * ore.ecost) (example in stone, not actually applicable)
-        },
-        copper = {
-            sprite = 66,
-            rarity = 0.03,
-            value = 10,
-            ecost = 1.1
-        },
-        gold = {
-            sprite = 67,
-            rarity = 0.02,
-            value = 20,
-            ecost = 1.25
-        },
-        cobalt = {
-            sprite = 68,
-            rarity = 0.02,
-            value = 30,
-            ecost = 1.5
-        },
-        quartz = {
-            sprite = 69,
-            rarity = 0.01,
-            value = 50,
-            ecost = 2
-        }
-    }
+    worldinit()
 
     --world generation
     worldgeneration(world.x+1, world.levelgroundy, 126, 64-12-1)
@@ -87,16 +46,7 @@ function _init()
     robot.depth = robot.y / 8
 
     --stats for jelpi
-    jelpi = {
-        spr = 49, --sprite numner
-        f = false, --flip sprite
-        x = world.jelpix * 8, --exact x position
-        y = world.jelpiy * 8, --exact y position
-        celx = world.jelpix, --celx position
-        cely = world.jelpiy, --cely position
-        alive = false, --has jelpi been spawned from the block
-        follow = false --is jelpi following the robot
-    }
+    jelpiinit()
 
     shopinit()
 
@@ -150,8 +100,6 @@ function _init()
 
     --camera set to robot position
     scrollcam()
-
-    
 
     --clear last thing
     cls()

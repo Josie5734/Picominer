@@ -12,6 +12,20 @@ behaviour when reaching the surface
 behaviour when robot dies
 ]]
 
+function jelpiinit() --inital jelpi data creation
+    jelpi = {
+        spr = 49, --sprite numner
+        f = false, --flip sprite
+        x = world.jelpix * 8, --exact x position
+        y = world.jelpiy * 8, --exact y position
+        celx = world.jelpix, --celx position
+        cely = world.jelpiy, --cely position
+        saved = false, --has reached the surface
+        alive = false, --has jelpi been spawned from the block
+        follow = false, --is jelpi following the robot
+    }
+end
+
 function jelpimove(direction)
     printh("jelpi move")
 
