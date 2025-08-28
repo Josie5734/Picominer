@@ -141,13 +141,22 @@ function _update()
     if jelpi.alive then --jelpi alive
         if not jelpi.saved then --if not saved
             if jelpi.follow then --if currently following
-                jelpimove(robot.direction)
+                jelpimove(robot.direction) --jelpi movement
+
                 if not robot.underground and jelpi.cely < 12 then --if both on surface
                     --maybe have a thing to make him move to his house
                     jelpi.saved = true --set state as saved
                     jelpi.follow = false --stop following
                 end --jelpi has been saved
-            end 
+
+                if not robot.alive then --if robot dies while jelpi is following
+                    jelpi.follow = false --stop following
+                end 
+            else
+                if robot.celx == jelpi.celx and robot.cely == jelpi.cely then --if robot is on samw block as jelpi
+                    jelpi.follow = true --jelpi start following
+                end 
+            end
         else jelpidance() end --else saved, do dance animation
     end
 

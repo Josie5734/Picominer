@@ -1,23 +1,6 @@
 current tasks:
 
-    jelpi block functionality:
-
-    when broken, little jelpi spawns and follows the player 
-        -stands in the last block that the player was in to avoid having to work out where to place him
-
-    player has to take jelpi to the surface in order to 'win'
-
-    if player dies before jelpi reaches the surface, jelpi waits at the death location to be picked up again
-
-    no real consequence to losing him, it is already hard enough to find the block and just not really worth it
-
-    could have a little building on the surface for where jelpi lives - environmental storytelling for the missing jelpi
-        could have hints at the jelpi block - maybe pay to reveal things
-
-    could potentially have the option to have jelpi follow you again after being saved, altho that kind of depends on what the end of the game is since there is no real motive to play after finding jelpi  
-
-    done: spawning, moving
-    next: reaching surface behaviour, robot dies behaviour
+    stone gravity + supports functionality and shop upgrade option
 
 todo:
     
@@ -29,8 +12,6 @@ todo:
     balancing and testing (stats and money costs etc)
 
     title screens and tutorials? + win visuals?
-
-    
 
 
     improvements on already done features:
@@ -66,6 +47,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    jelpi and jelpi block functionality
 
     darkcircle upgrade option in shop
 
