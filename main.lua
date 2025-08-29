@@ -333,7 +333,7 @@ function stoneupdate(s)
         end
     end
 
-    --collision to break ladders when halfway over them
+        --collision to break ladders when halfway over them
     if mget(s.celx,s.cely+1) == 113 and s.y % 8 == 4 then 
         mset(s.celx,s.cely+1,0) --remove ladder
     end
