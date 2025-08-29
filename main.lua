@@ -28,6 +28,10 @@ function _init()
     mset(world.jelpix, world.jelpiy, 70)
     printh("world generated")
 
+    --list for falling stone objects
+    stoneobjs = {}
+    --has x and y pos, timer values for events
+
     --create robot character
     robot = {
         spr = 1, --sprite number
@@ -48,6 +52,7 @@ function _init()
     --stats for jelpi
     jelpiinit()
 
+    --shop initialisation
     shopinit()
 
     stats = { --table for tracking game stats
@@ -160,6 +165,17 @@ function _update()
         else jelpidance() end --else saved, do dance animation
     end
 
+    --falling stone updating
+    local i, j = 1, 1 --used for iterating through object list (cant use del() since objects are not uniquely named)
+    while (stoneobjs[i]) do --loop through all the objects in the list
+        if not stoneobjs[i]:update() then --if updating stone object returns false on the "finished" value
+            if (i!=j) stoneobjs[j]=stoneobjs[i] stoneobjs[i]=nil --shift objects if necessary ?
+            j += 1
+        else stoneobjs[i]=nil end --if stone update does return true on "finished", make that object nil (delete it)
+        i += 1 --iterate to next object
+    end
+
+
 end
 
 
@@ -197,7 +213,10 @@ function _draw()
             jelpisaved()
         end
     end
-    
+
+    --falling stone sprite drawing
+    for o in all(stoneobjs) do o:draw() end --do the draw function for every current stone object
+
     --draw ui above or below ground
     if robot.underground then
         clip() --reset clip mask for ui to go over top
@@ -275,3 +294,63 @@ function respawn() --reset the robot back to the top
     
 end
 
+
+--when mining, checks if block above is stone 
+function stonecheck()
+
+    --check if block above is stone
+    if mget(robot.celx, robot.cely - 1) == 65 then --if block above is stone
+
+        --create stone object
+        local stone = {
+            x = robot.x, y = robot.y - 8, --position of stone, uses x,y rather than cel to have pixel specific movements
+            timer = 0, --tracks how long the stone has been spawned for, used to decide what to do with it
+            finished = false, --stone has reached the final placement and object is ready to be removed
+            update = stoneupdate, draw = stonedraw --the update function for the stone
+        }
+        add(stoneobjs,stone) --add new object to the stone objects list
+
+    end
+
+end
+
+--the update function for the stone objects
+function stoneupdate(s)
+
+    --remove map block where stone is at start
+    if s.timer == 0 then 
+        mset(s.x/8,s.y/8,0)
+        printh(s.timer .. " " .. s.x .. " " .. s.y)
+    end
+
+    --initial wobble animation
+    if s.timer > 1 and s.timer <= 90 then --for the first 120 frames (4 seconds)
+        if s.timer % 5 == 0 and s.timer % 10 != 0 then --if frames is a multiple of 5 but not 10 e.g 5,15,25
+            s.y += 1 --move block one pixel down
+        elseif s.timer % 10 == 0 then --if frames is a multiple of 10 e.g 10,20,30
+            s.y -= 1 --move back up 1 pixel
+        end
+    end
+
+    --falling sequence   - 1 pixel every 4 frames, until collision with block below
+    if s.timer > 90 then --after 120 frames
+        if s.timer % 2 == 0 then --every 4 frames
+            if pget(s.x,s.y+8) == 3 then --collision detection, checks for the color of the  background tile
+                s.y += 1 --move down one pixel
+            else --if color is not 3 (there is a block there) - end of falling sequence
+                mset(s.x/8,s.y/8,65) --set the map tile to stone
+                s.finished = true --set finished flag to true
+            end
+        end
+    end
+
+    s.timer += 1 --iterate timer 
+
+    return s.finished --return the state of the object
+
+end
+
+--draw the stone as a sprite, used for the FOR to be able to loop through objects
+function stonedraw(s) 
+    spr(65,s.x,s.y)
+end

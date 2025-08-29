@@ -2,6 +2,20 @@ current tasks:
 
     stone gravity + supports functionality and shop upgrade option
 
+    so far: 
+        created list for stone objects, with update and draw functions to update and draw each objects (if any)
+        function to check the block above when mining and create a new object if it is stone 
+        function to animate the stone and then make it fall
+
+    current:
+        bug - stone has issues falling more than 1 block, may be related to the x,y being exact coords rather than map cells
+        sometimes just doesnt fall, sometimes only falls a few blocks, sometimes clips to being placed 1 square above where it finished
+
+    todo:
+        collision system for squishing the robot 
+        pipe placement and other related stuff
+        needs a way to collide with supports (current check is for left most pixel, could just move to where pipe pixel is)
+
 todo:
     
     stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
