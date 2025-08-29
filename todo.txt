@@ -8,22 +8,15 @@ current tasks:
         created list for stone objects, with update and draw functions to update and draw each objects (if any)
         function to check the block above when mining and create a new object if it is stone 
         function to animate the stone and then make it fall
+        made falling feature better so that the blocks can now fall offscreen - pixel collision was detecting the black circle and triggering a collision, system now uses the map cels to see the next cell and choose to keep moving or no
+        destroys ladders when falling
 
     current:
-        update collision to be different
-            keep track of the cel that the stone is in 
-            do checks one the cell below to see what is there - allows for ladder and support checks 
-            can also check the robot cel pos 
-
-        bug - stone has issues falling more than 1 block, may be related to the x,y being exact coords rather than map cells
-        sometimes just doesnt fall, sometimes only falls a few blocks, sometimes clips to being placed 1 square above where it finished
+        squishing the robot when falling        
 
     todo:
-        collision system for squishing the robot 
-        crushing ladders 
-        pipe placement and other related stuff
+        support placement, collision, upgrade and other related stuff
         also needs to check for any stone above the current stone - chain reaction of the check function
-        needs a way to collide with supports (current check is for left most pixel, could just move to where pipe pixel is)
 
 todo:
     

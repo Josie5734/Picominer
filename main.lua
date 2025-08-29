@@ -315,13 +315,12 @@ function stonecheck()
 
 end
 
---the update function for the stone objects
+--the update function for the stone objects  
 function stoneupdate(s)
 
     --remove map block where stone is at start
     if s.timer == 0 then 
         mset(s.x/8,s.y/8,0)
-        printh(s.timer .. " " .. s.x .. " " .. s.y)
     end
 
     --initial wobble animation
@@ -333,25 +332,23 @@ function stoneupdate(s)
         end
     end
 
-        --collision to break ladders when halfway over them
+    --collision to break ladders when halfway over them
     if mget(s.celx,s.cely+1) == 113 and s.y % 8 == 4 then 
         mset(s.celx,s.cely+1,0) --remove ladder
     end
 
     --falling sequence   - 1 pixel every 4 frames, until collision with block below
-    if s.timer > 60 then --after 120 frames
+    if s.timer > 60 then --after 60 frames
         if s.timer % 2 == 0 then --every 4 frames
-            if pget(s.x,s.y+8) == 3 then --collision detection, checks for the color of the background tile
+            if fget(mget(s.celx,s.cely+1),0) == false or fget(mget(s.celx,s.cely+1),3) then --collision detection, checks flag of map cel below current for either 0 or 3 (solid block or support)
                 s.y += 1 --move down one pixel
-            else --if color is not 3 (there is a block there) - end of falling sequence
-                mset(s.x/8,s.y/8,65) --set the map tile to stone
+            else --if flag is 0 (there is a block there) - end of falling sequence
+                mset(s.celx,s.cely,65) --set the map tile to stone
                 s.finished = true --set finished flag to true
             end
         end
         --update the current cel of the stone while falling
         s.cely = (s.y - (s.y % 8)) / 8 
-        printh("stone: " .. s.cely)
-        printh(robot.cely)
     end
 
     s.timer += 1 --iterate timer 
