@@ -9,7 +9,7 @@
 #include stats.lua 
 #include shop.lua]]
 
---flags: 0 = collide, 1 = can stand ontop, 2 = jelpiblock, 7 = mineable
+--flags: 0 = collide, 1 = can stand ontop, 2 = jelpiblock, 3 = support, 7 = mineable
 
 function _init()
 
@@ -23,8 +23,8 @@ function _init()
 
     --world generation
     worldgeneration(world.x+1, world.levelgroundy, 126, 64-12-1)
-    world.jelpix = 64 --flr(rnd(128)) --anywhere on the x axis
-    world.jelpiy = 15 --flr(rnd(26) + 26) --in the bottom half of y axis
+    world.jelpix = flr(rnd(128)) --anywhere on the x axis
+    world.jelpiy = flr(rnd(26) + 26) --in the bottom half of y axis
     mset(world.jelpix, world.jelpiy, 70)
     printh("world generated")
 
@@ -303,10 +303,11 @@ function stonecheck()
 
         --create stone object
         local stone = {
-            x = robot.x, y = robot.y - 8, --position of stone, uses x,y rather than cel to have pixel specific movements
+            x = robot.x, y = robot.y - 8, --position of stone in x,y for specific movements
+            celx = robot.celx, cely = robot.cely - 1, --map cel of stone
             timer = 0, --tracks how long the stone has been spawned for, used to decide what to do with it
             finished = false, --stone has reached the final placement and object is ready to be removed
-            update = stoneupdate, draw = stonedraw --the update function for the stone
+            update = stoneupdate, draw = stonedraw, --the update function for the stone
         }
         add(stoneobjs,stone) --add new object to the stone objects list
 
@@ -324,7 +325,7 @@ function stoneupdate(s)
     end
 
     --initial wobble animation
-    if s.timer > 1 and s.timer <= 90 then --for the first 120 frames (4 seconds)
+    if s.timer > 1 and s.timer <= 60 then --for the first 60 frames (s seconds)
         if s.timer % 5 == 0 and s.timer % 10 != 0 then --if frames is a multiple of 5 but not 10 e.g 5,15,25
             s.y += 1 --move block one pixel down
         elseif s.timer % 10 == 0 then --if frames is a multiple of 10 e.g 10,20,30
@@ -332,19 +333,30 @@ function stoneupdate(s)
         end
     end
 
+    --collision to break ladders when halfway over them
+    if mget(s.celx,s.cely+1) == 113 and s.y % 8 == 4 then 
+        mset(s.celx,s.cely+1,0) --remove ladder
+    end
+
     --falling sequence   - 1 pixel every 4 frames, until collision with block below
-    if s.timer > 90 then --after 120 frames
+    if s.timer > 60 then --after 120 frames
         if s.timer % 2 == 0 then --every 4 frames
-            if pget(s.x,s.y+8) == 3 then --collision detection, checks for the color of the  background tile
+            if pget(s.x,s.y+8) == 3 then --collision detection, checks for the color of the background tile
                 s.y += 1 --move down one pixel
             else --if color is not 3 (there is a block there) - end of falling sequence
                 mset(s.x/8,s.y/8,65) --set the map tile to stone
                 s.finished = true --set finished flag to true
             end
         end
+        --update the current cel of the stone while falling
+        s.cely = (s.y - (s.y % 8)) / 8 
+        printh("stone: " .. s.cely)
+        printh(robot.cely)
     end
 
     s.timer += 1 --iterate timer 
+    
+    
 
     return s.finished --return the state of the object
 
