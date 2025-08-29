@@ -1,5 +1,7 @@
 current tasks:
 
+    move jelpi bloxk spawning back to random
+
     stone gravity + supports functionality and shop upgrade option
 
     so far: 
