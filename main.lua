@@ -23,8 +23,8 @@ function _init()
 
     --world generation
     worldgeneration(world.x+1, world.levelgroundy, 126, 64-12-1)
-    world.jelpix = 64 --flr(rnd(128)) --anywhere on the x axis
-    world.jelpiy = 15 --flr(rnd(26) + 26) --in the bottom half of y axis
+    world.jelpix = flr(rnd(128)) --anywhere on the x axis
+    world.jelpiy = flr(rnd(26) + 26) --in the bottom half of y axis
     mset(world.jelpix, world.jelpiy, 70)
     printh("world generated")
 
@@ -324,7 +324,7 @@ function stoneupdate(s)
     end
 
     --initial wobble animation
-    if s.timer > 1 and s.timer <= 90 then --for the first 120 frames (4 seconds)
+    if s.timer > 1 and s.timer <= 60 then --for the first 60 frames (s seconds)
         if s.timer % 5 == 0 and s.timer % 10 != 0 then --if frames is a multiple of 5 but not 10 e.g 5,15,25
             s.y += 1 --move block one pixel down
         elseif s.timer % 10 == 0 then --if frames is a multiple of 10 e.g 10,20,30
@@ -333,7 +333,7 @@ function stoneupdate(s)
     end
 
     --falling sequence   - 1 pixel every 4 frames, until collision with block below
-    if s.timer > 90 then --after 120 frames
+    if s.timer > 60 then --after 120 frames
         if s.timer % 2 == 0 then --every 4 frames
             if pget(s.x,s.y+8) == 3 then --collision detection, checks for the color of the  background tile
                 s.y += 1 --move down one pixel
