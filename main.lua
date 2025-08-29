@@ -332,9 +332,14 @@ function stoneupdate(s)
         end
     end
 
-    --collision to break ladders when halfway over them
-    if mget(s.celx,s.cely+1) == 113 and s.y % 8 == 4 then 
-        mset(s.celx,s.cely+1,0) --remove ladder
+    --collision to break ladders when halfway over them and to squish the robot
+    if s.y % 8 == 4 then --if stone is halfway over block
+        if mget(s.celx,s.cely+1) == 113 then --if block is ladder
+            mset(s.celx,s.cely+1,0) --remove ladder
+        end
+        if robot.x == s.x and robot.y == s.y + 4 then --if robot is in same x pos and 4 pixels below top of stone
+            robot.alive = false --kill robot
+        end
     end
 
     --falling sequence   - 1 pixel every 4 frames, until collision with block below
