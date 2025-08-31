@@ -20,9 +20,13 @@ current tasks:
 
 
     current:
-        add supports
-            supports need the same falling mechanic as stone for when the block below is mined or support below is removed
-            supports stop stone falls
+        update the stone fall system to also incorporate the supports
+            change the stone objects list to just fallingobjects list
+            change stonecheck to fallcheck and make it check for supports and support ladders, add those objects to fallingobjects
+                add a new val in object table for the sprite number to be used 
+            change stoneupdate to fallupdate
+                add if statement on the breaking ladders section to only apply it to stone
+            change stonedraw to fallingdraw
 
         added the flag check for supports in the collision check, is currently unused because supports are not added yet      
 
