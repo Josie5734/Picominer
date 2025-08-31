@@ -1,7 +1,5 @@
 current tasks:
 
-    move jelpi bloxk spawning back to random
-
     stone gravity + supports functionality and shop upgrade option
 
     so far: 
@@ -11,9 +9,19 @@ current tasks:
         made falling feature better so that the blocks can now fall offscreen - pixel collision was detecting the black circle and triggering a collision, system now uses the map cels to see the next cell and choose to keep moving or no
         destroys ladders when falling
         squishing the robot when falling  
+        status message - default when underground - ("Z - place support")
+        new sprite for support + ladder
+        press z to place or remove a support
+        supports cannot be placed without a support or solid block below them
+
 
 
     current:
+        add supports
+            supports need the same falling mechanic as stone for when the block below is mined or support below is removed
+            supports stop stone falls
+            add support data and shop upgrade page
+
         added the flag check for supports in the collision check, is currently unused because supports are not added yet      
 
     todo:

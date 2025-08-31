@@ -1,10 +1,5 @@
 --drawing ui and camera
 
-
-
-function updateui() -- currently unused, keeping just incase
-end
-
 function drawui()
 
     local toprow = uibar.ty + 2 -- value for top row of ui to avoid constant recalculating

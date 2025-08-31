@@ -127,6 +127,9 @@ function _update()
     if robot.alive and not shop.open then
         --player movement
         robomove()
+        --support placement
+        placesupport()
+    
     elseif not robot.alive then --if not alive
         robot.spr = 17 --death sprite
         if btnp(5) then --x to respawn
