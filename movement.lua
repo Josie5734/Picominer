@@ -57,7 +57,7 @@ function robomove()
                     moveup()  
                 end --cannot move up
             else --block is ladder
-                if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder
+                if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder/support
                 moveup()  
             end
         else uibar.status = "unbreakable" end --status message for not breakable

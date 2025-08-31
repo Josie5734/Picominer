@@ -8,7 +8,7 @@ function shopinit()
         x = robot.x, --stays above robot 
         y = robot.y - 24, --3 blocks above
         open = false, --shop menu open state
-        itemlist={"energy","ladders","inventory","falldist","visionette"},
+        itemlist={"energy","ladders","supports","inventory","falldist","visionette"},
         currentitem = "energy", -- the upgrade to show
         itemcounter = 1 --counter for the itemlist
     }
@@ -21,6 +21,13 @@ function shopinit()
             statinc = 50, --how much is added to the stats.max for given stat
         },
         ladders = {
+            current = 1,
+            next = 2,
+            cost = 500,
+            costinc = 500,
+            statinc = 5,
+        },
+        supports = {
             current = 1,
             next = 2,
             cost = 500,
@@ -158,6 +165,8 @@ function shopupgrade(upgrade)
         visiondata.y -= upgrades[upgrade].statinc
         visiondata.size += upgrades[upgrade].statinc * 2
         visiondata.myr += upgrades[upgrade].statinc
+    elseif upgrade == "supports" then 
+        stats.max.supports += upgrades[upgrade].statinc
     end
 
     --increase relevant values

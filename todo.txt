@@ -13,6 +13,9 @@ current tasks:
         new sprite for support + ladder
         press z to place or remove a support
         supports cannot be placed without a support or solid block below them
+        reset supports when going to surface
+        added supports to shop upgrades
+
 
 
 
@@ -20,7 +23,6 @@ current tasks:
         add supports
             supports need the same falling mechanic as stone for when the block below is mined or support below is removed
             supports stop stone falls
-            add support data and shop upgrade page
 
         added the flag check for supports in the collision check, is currently unused because supports are not added yet      
 

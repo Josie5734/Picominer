@@ -23,6 +23,9 @@ function updatestats()
         --reset ladders
         if stats.current.ladders < stats.max.ladders then stats.current.ladders = stats.max.ladders end 
 
+        --reset supports
+        if stats.current.supports < stats.max.supports then stats.current.supports = stats.max.supports end
+
         --reset energy
         if stats.current.energy < stats.max.energy then stats.current.energy = stats.max.energy end
     end
