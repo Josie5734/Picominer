@@ -113,6 +113,8 @@ function mine(xx,yy) --xx, yy is block to be mined
     else stats.current.energy -= robot.ecost end --not an ore, - default ecost
 
     mset(xx, yy, 0)--mine block
+
+    fallingcheck(xx,yy-1) --do a falling check on the mined block
 end
 
 --may need reassessing after movement overhaul
@@ -164,7 +166,6 @@ function moveleft()
     uibar.tx -=8 --move ui
     stats.current.energy -= robot.ecost --use energy for moving
     robot.direction = "left" --direction moved
-    fallingcheck() --check for falling objects
 end
 
 function moveright()
@@ -176,7 +177,6 @@ function moveright()
     uibar.tx +=8 --move ui
     stats.current.energy -= robot.ecost
     robot.direction = "right" --direction moved
-    fallingcheck() --check for falling objects
 end
 
 function moveup()
@@ -188,7 +188,6 @@ function moveup()
     uibar.by -= 8
     robot.direction = "up" --direction moved
     if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
-    fallingcheck() --check for falling objects
 end
 
 function movedown()
@@ -200,7 +199,6 @@ function movedown()
     uibar.by += 8
     robot.direction = "down" --direction moved
     stats.current.energy -= robot.ecost
-    fallingcheck() --check for falling objects
 end
 
 --support placement

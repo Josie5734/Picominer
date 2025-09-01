@@ -3,17 +3,18 @@
 
 
 --checks if block above can be a falling object 
-function fallingcheck()
+function fallingcheck(xx,yy) --xx,yy is the robot celx and cely-1
 
-    local block = mget(robot.celx,robot.cely-1)
+    local block = mget(xx,yy)
+    local crying = false
 
     --check if block above is stone
     if block == 65 or block == 114 or block == 115 then --if block above is stone or support
 
         --create stone object
         local object = {
-            x = robot.x, y = robot.y - 8, --position of stone in x,y for specific movements
-            celx = robot.celx, cely = robot.cely - 1, --map cel of stone
+            x = xx*8, y = yy*8, --position of stone in x,y for specific movements
+            celx = xx, cely = yy, --map cel of stone
             sprite = block, --sprite number of object
             timer = 0, --tracks how long the stone has been spawned for, used to decide what to do with it
             finished = false, --stone has reached the final placement and object is ready to be removed
@@ -21,7 +22,11 @@ function fallingcheck()
         }
         add(fallingobjs,object) --add new object to the stone objects list
 
+        crying = true
+
     end
+
+    if crying == true then fallingcheck(xx,yy-1) end -- if falling object found, repeat this function if until the block above is not a falling object
 
 end
 
@@ -31,10 +36,10 @@ function fallingupdate(o)
     --remove map block where object is at start
     if o.timer == 0 then 
         if o.sprite == 115 then --in specific case of support ladders
-            mset(robot.celx,robot.cely-1,113) --set the block to just a ladder
+            mset(o.celx,o.cely,113) --set the block to just a ladder
             o.sprite = 114 --set the object to just a support so only the support falls
         else --object is not a support ladder
-            mset(o.x/8,o.y/8,0) --just remove block
+            mset(o.celx,o.cely,0) --just remove block
         end
     end
 
@@ -62,9 +67,9 @@ function fallingupdate(o)
     --falling sequence   - 1 pixel every 4 frames, until collision with block below
     if o.timer > 60 then --after 60 frames
         if o.timer % 2 == 0 then --every 4 frames
-            if fget(mget(o.celx,o.cely+1),0) == false or fget(mget(o.celx,o.cely+1),3) then --collision detection, checks flag of map cel below current for either 0 or 3 (solid block or support)
+            if fget(mget(o.celx,o.cely+1),0) == false and fget(mget(o.celx,o.cely+1),3) == false then --collision detection, checks flag of map cel below current for either 0 or 3 (solid block or support)
                 o.y += 1 --move down one pixel
-            else --if flag is 0 (there is a block there) - end of falling sequence
+            else --if flag is 0 or 3 (there is a block/support there) - end of falling sequence
                 if o.sprite == 114 and mget(o.celx,o.cely) == 113 then --if the sprite is a support and final block is a ladder
                     mset(o.celx,o.cely,115) --set block to support ladder
                 else --else empty block, set to stone or support

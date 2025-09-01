@@ -18,12 +18,12 @@ current tasks:
 
         updated stone falling system to be a general falling object system, now incorporates supports and support ladders
 
-
+        falling system now detects vertical stacks of objects
+        fixed it to actually detect supports when falling, stone now interacts with them
 
 
     current:
-        make falling system check the block above a just triggered object to see if it can fall too
-            should trigger a chain reaction for stacks of stone/supports
+        bug? - when stone starts to go through falling sequence, robot can move up through it since technically the map cell has no block there 
     todo:
 
 todo:
