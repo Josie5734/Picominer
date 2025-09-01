@@ -8,7 +8,8 @@
 #include ui.lua
 #include stats.lua 
 #include shop.lua
-#include fallingobjs.lua]]
+#include fallingobjs.lua
+#include credits.lua]]
 
 --flags: 0 = collide, 1 = can stand ontop, 2 = jelpiblock, 3 = support, 7 = mineable
 
@@ -112,6 +113,9 @@ function _init()
 
     --clear last thing
     cls()
+
+    --credits menu
+    creditsmenuinit()
 end
 
 
@@ -130,7 +134,9 @@ function _update()
     --controls
     if splashmenu == true then --if opening splash menu is there
         if btnp(0) or btnp(1) or btnp(2) or btnp(3) or btnp(4) or btnp(5) then splashmenu = false end 
-    else --once splash menu is done, standard controls for rest of game
+    elseif creditsmenu == true then --state for credits menu
+        if btnp(0) or btnp(1) or btnp(2) or btnp(3) or btnp(4) or btnp(5) then creditsmenu = false end 
+    else--once splash menu is done, standard controls for rest of game
         if robot.alive and not shop.open then
             --player movement
             robomove()
@@ -194,58 +200,61 @@ end
 function _draw()
     cls()
 
-    --has to be done after cls() but before anything else
-    if robot.underground then --set the clipping rectangle for underground filter
-        clip(visiondata.x, visiondata.y, visiondata.size, visiondata.size) 
-    end
-    
-    rectfill(0,0,1024,512,3) --draws darker background layer
-
-    scrollcam() --scrolls camera 
-
-    --draw current map
-    map(0,0,0,0,world.celw,world.celh)
-
-    --draw splashscreen at start
-    if splashmenu == true then 
-        palt(10,true)
-        palt(0,false)
-        spr(83,screenx+19,screeny+2,11,3)
-        palt()
-    end
-    
-    --draw robot
-    spr(robot.spr,robot.x,robot.y,1,1,robot.f)
-
-    if not robot.underground then --if robot on surface
-        spr(shop.spr, shop.x, shop.y) --draw shop sprite
-        if shop.open then --draw shop ui
-            shopdraw()
-        end
-    end
-
-    --jelpi draw
-    if jelpi.alive then
-        spr(jelpi.spr, jelpi.x, jelpi.y,1,1,jelpi.f)
-
-        if jelpi.saved then --draw saved speech bubble
-            jelpisaved()
-        end
-    end
-
-    --falling object sprite drawing
-    for o in all(fallingobjs) do o:draw() end --do the draw function for every current object
-
-    --draw ui above or below ground
-    if robot.underground then
-        clip() --reset clip mask for ui to go over top
-        darkscreen(visiondata.myr) --fill in rectangle to a circle
-        drawui()--draw the ui
+    if creditsmenu == true then --draw the credit menu if open
+        creditsmenudraw()
     else
-        drawui() --draw without clipping anyway
-        rectfill(robot.x-55, robot.y+24,robot.x+72,robot.y+47,0)--rectangle to cover the underground when on the surface
-    end
+        --has to be done after cls() but before anything else
+        if robot.underground then --set the clipping rectangle for underground filter
+            clip(visiondata.x, visiondata.y, visiondata.size, visiondata.size) 
+        end
+        
+        rectfill(0,0,1024,512,3) --draws darker background layer
 
+        scrollcam() --scrolls camera 
+
+        --draw current map
+        map(0,0,0,0,world.celw,world.celh)
+
+        --draw splashscreen at start
+        if splashmenu == true then 
+            palt(10,true)
+            palt(0,false)
+            spr(83,screenx+19,screeny+2,11,3)
+            palt()
+        end
+        
+        --draw robot
+        spr(robot.spr,robot.x,robot.y,1,1,robot.f)
+
+        if not robot.underground then --if robot on surface
+            spr(shop.spr, shop.x, shop.y) --draw shop sprite
+            if shop.open then --draw shop ui
+                shopdraw()
+            end
+        end
+
+        --jelpi draw
+        if jelpi.alive then
+            spr(jelpi.spr, jelpi.x, jelpi.y,1,1,jelpi.f)
+
+            if jelpi.saved then --draw saved speech bubble
+                jelpisaved()
+            end
+        end
+
+        --falling object sprite drawing
+        for o in all(fallingobjs) do o:draw() end --do the draw function for every current object
+
+        --draw ui above or below ground
+        if robot.underground then
+            clip() --reset clip mask for ui to go over top
+            darkscreen(visiondata.myr) --fill in rectangle to a circle
+            drawui()--draw the ui
+        else
+            drawui() --draw without clipping anyway
+            rectfill(robot.x-55, robot.y+24,robot.x+72,robot.y+47,0)--rectangle to cover the underground when on the surface
+        end
+    end
     
 
 end
