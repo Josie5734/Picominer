@@ -1,18 +1,10 @@
 current tasks:
 
-    opening splash/title screen 
-        make a big sprite for a splashscreen
-        have a state for splash on/off 
-        starts as on, puts the splash screen at the top, press any button to start - state off 
+    sound effects + music
 
 todo:
 
-    sound effects + music
-
     balancing and testing (stats and money costs etc)
-
-    title screens and tutorials? + win visuals?
-
 
     improvements on already done features:
 
@@ -27,6 +19,11 @@ todo:
         zakk feedback: gradual fade on the edge of the dark circle - note: currently not sure if this is actually possible
 
         have implemented use of a big table for all values of ores, couldnt figure out how to change world gen to use it, may need doing later on in clean up
+
+        logo sprite could be animated
+            maybe move up and down every few frames
+            animate the little orange flames
+                could be different alternated sprites or could use like a cool line systemt o draw varying length lines
 
 
 
@@ -47,6 +44,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    splash logo
 
     custom credit menu to be used across all pico games using the system menu
 
