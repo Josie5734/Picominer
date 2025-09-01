@@ -20,10 +20,11 @@ current tasks:
 
         falling system now detects vertical stacks of objects
         fixed it to actually detect supports when falling, stone now interacts with them
+        can no longer walk into block that stone was on whilst it is in the beginning of the falling animation
 
 
     current:
-        bug? - when stone starts to go through falling sequence, robot can move up through it since technically the map cell has no block there 
+        
     todo:
 
 todo:

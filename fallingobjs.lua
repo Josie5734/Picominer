@@ -38,6 +38,8 @@ function fallingupdate(o)
         if o.sprite == 115 then --in specific case of support ladders
             mset(o.celx,o.cely,113) --set the block to just a ladder
             o.sprite = 114 --set the object to just a support so only the support falls
+        elseif o.sprite == 65 then --if object is stone
+            mset(o.celx,o.cely,71) --an empty sprite with the 0 flag from stone, prevents the player from being able to move up through the stone
         else --object is not a support ladder
             mset(o.celx,o.cely,0) --just remove block
         end
@@ -61,6 +63,8 @@ function fallingupdate(o)
             if robot.x == o.x and robot.y == o.y + 4 then --if robot is in same x pos and 4 pixels below top of stone
                 robot.alive = false --kill robot
             end
+
+            mset(o.celx,o.cely,0) --set the block where the stone started back to the empty sprite with no collision flag so the player can move through it now
         end
     end
 

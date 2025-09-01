@@ -37,7 +37,7 @@ function robomove()
     end
 
     if btnp(2) and robot.underground and not robot.falling then --UP 
-        if mget(robot.celx, robot.cely - 1) != 65 then --if block above is not objects
+        if mget(robot.celx,robot.cely-1) != 65 and mget(robot.celx,robot.cely-1) != 71 then --if block above is not stone or sprite 71(empty sprite used as stone stand in during falling animation, removed once stone starts falling)
             if mget(robot.celx, robot.cely) != 113 then --if current block is not ladder
                 if stats.current.ladders > 0 then --if ladder counter > 0 
                     stats.current.ladders -= 1 --remove 1 ladder from inventory
