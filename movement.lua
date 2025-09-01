@@ -42,7 +42,7 @@ function robomove()
                 if stats.current.ladders > 0 then --if ladder counter > 0 
                     stats.current.ladders -= 1 --remove 1 ladder from inventory
                     if mget(robot.celx,robot.cely) == 114 then --if block is a support
-                        mset(robot.celx,robot.cely,115) --place a supported ladder
+                        mset(robot.celx,robot.cely,98) --place a supported ladder
                     elseif mget(robot.celx,robot.cely) == 0 then --if block is empty
                         mset(robot.celx, robot.cely, 113) --place a normal ladder  
                     end --no check for support ladders, should just go up as if it is an existing ladder
@@ -207,7 +207,7 @@ function placesupport()
         if btnp(4) then --Z to place support 
             if fget(mget(robot.celx,robot.cely+1),3) or fget(mget(robot.celx,robot.cely+1),0) then --if block below is support or solid
                 if fget(mget(robot.celx,robot.cely),3) then --if flag for cell is 3(support or ladder support) then
-                    if mget(robot.celx,robot.cely) == 115 then --if block is a support ladder
+                    if mget(robot.celx,robot.cely) == 98 then --if block is a support ladder
                         mset(robot.celx,robot.cely,113) --set to just a ladder
                         stats.current.supports += 1 --add support to inventory
                     else --else block is a regular support
@@ -217,7 +217,7 @@ function placesupport()
                 else --block is not already a support
                     if stats.current.supports > 0 then --if have supports in inventory
                         if mget(robot.celx,robot.cely) == 113 then --if block is ladder
-                            mset(robot.celx,robot.cely,115) --set to support ladder
+                            mset(robot.celx,robot.cely,98) --set to support ladder
                             stats.current.supports -= 1 --use 1 support
                         else --else it is empty
                             mset(robot.celx,robot.cely,114) --set block to support

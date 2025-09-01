@@ -9,7 +9,7 @@ function fallingcheck(xx,yy) --xx,yy is the robot celx and cely-1
     local crying = false
 
     --check if block above is stone
-    if block == 65 or block == 114 or block == 115 then --if block above is stone or support
+    if block == 65 or block == 114 or block == 98 then --if block above is stone or support
 
         --create stone object
         local object = {
@@ -35,7 +35,7 @@ function fallingupdate(o)
 
     --remove map block where object is at start
     if o.timer == 0 then 
-        if o.sprite == 115 then --in specific case of support ladders
+        if o.sprite == 98 then --in specific case of support ladders
             mset(o.celx,o.cely,113) --set the block to just a ladder
             o.sprite = 114 --set the object to just a support so only the support falls
         elseif o.sprite == 65 then --if object is stone
@@ -75,7 +75,7 @@ function fallingupdate(o)
                 o.y += 1 --move down one pixel
             else --if flag is 0 or 3 (there is a block/support there) - end of falling sequence
                 if o.sprite == 114 and mget(o.celx,o.cely) == 113 then --if the sprite is a support and final block is a ladder
-                    mset(o.celx,o.cely,115) --set block to support ladder
+                    mset(o.celx,o.cely,98) --set block to support ladder
                 else --else empty block, set to stone or support
                     mset(o.celx,o.cely,o.sprite) --set the map tile to object
                 end

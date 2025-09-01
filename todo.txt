@@ -1,5 +1,11 @@
 current tasks:
 
+    opening splash/title screen 
+        make a big sprite for a splashscreen
+        have a state for splash on/off 
+        starts as on, puts the splash screen at the top, press any button to start - state off 
+
+    custom credit menu to be used across all pico games using the system menu
 
 todo:
 

@@ -104,6 +104,9 @@ function _init()
     --variable for the dark clip mask when underground
     darkmask = false
 
+    --the state variable for opening splash screen, true at start of game
+    splashmenu = true
+
     --camera set to robot position
     scrollcam()
 
@@ -125,20 +128,24 @@ function _update()
     gravity()
 
     --controls
-    if robot.alive and not shop.open then
-        --player movement
-        robomove()
-        --support placement
-        placesupport()
-    
-    elseif not robot.alive then --if not alive
-        robot.spr = 17 --death sprite
-        if btnp(5) then --x to respawn
-            robot.alive = true --reset state
-            respawn()
+    if splashmenu == true then --if opening splash menu is there
+        if btnp(0) or btnp(1) or btnp(2) or btnp(3) or btnp(4) or btnp(5) then splashmenu = false end 
+    else --once splash menu is done, standard controls for rest of game
+        if robot.alive and not shop.open then
+            --player movement
+            robomove()
+            --support placement
+            placesupport()
+        
+        elseif not robot.alive then --if not alive
+            robot.spr = 17 --death sprite
+            if btnp(5) then --x to respawn
+                robot.alive = true --reset state
+                respawn()
+            end
+        elseif shop.open then --shop menu controls
+            shopcontrols()
         end
-    elseif shop.open then --shop menu controls
-        shopcontrols()
     end
 
     --stats
@@ -198,6 +205,12 @@ function _draw()
 
     --draw current map
     map(0,0,0,0,world.celw,world.celh)
+
+    --draw splashscreen at start
+    if splashmenu == true then 
+        local width, offset = 80, (127-80)/2
+        rectfill(screenx+offset,screeny+2,screenx+width+offset,screeny+28,11)
+    end
     
     --draw robot
     spr(robot.spr,robot.x,robot.y,1,1,robot.f)
@@ -230,6 +243,8 @@ function _draw()
         drawui() --draw without clipping anyway
         rectfill(robot.x-55, robot.y+24,robot.x+72,robot.y+47,0)--rectangle to cover the underground when on the surface
     end
+
+    
 
 end
 

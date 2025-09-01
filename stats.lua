@@ -38,7 +38,9 @@ function updatestats()
     end
 
     --status message
-    if not robot.underground then --if on surface, give prompt for shop in status bar
+    if splashmenu == true then --start of game splashscreen
+        uibar.status = "press any button to start"
+    elseif not robot.underground then --if on surface, give prompt for shop in status bar
         uibar.status = "🅾️ to open shop"  
     elseif robot.underground then --if underground, give prompt for placing supports
         uibar.status = "🅾️ place support"
