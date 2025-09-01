@@ -5,7 +5,6 @@ current tasks:
         have a state for splash on/off 
         starts as on, puts the splash screen at the top, press any button to start - state off 
 
-    custom credit menu to be used across all pico games using the system menu
 
 todo:
 
@@ -49,6 +48,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    custom credit menu to be used across all pico games using the system menu
 
     stone gravity + supports functionality and shop upgrade option
 

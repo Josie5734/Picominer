@@ -14,7 +14,7 @@ function creditsmenudraw()
     --variable things for who is credited, changed per cart
     local gamename = "picominer"
     local credits = "coding,art,music" --credit for me
-    local sydney, sydneycredits = true, "art" --true if sydney crddited, credit list for sydney
+    local sydney, sydneycredits = true, "art,logo design" --true if sydney credited, credit list for sydney
 
     local x,y = 3,3 --text ypos
     local line = 6 --line size for adding to next line
