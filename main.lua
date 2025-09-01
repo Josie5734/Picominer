@@ -208,8 +208,10 @@ function _draw()
 
     --draw splashscreen at start
     if splashmenu == true then 
-        local width, offset = 80, (127-80)/2
-        rectfill(screenx+offset,screeny+2,screenx+width+offset,screeny+28,11)
+        palt(10,true)
+        palt(0,false)
+        spr(83,screenx+19,screeny+2,11,3)
+        palt()
     end
     
     --draw robot
