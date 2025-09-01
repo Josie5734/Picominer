@@ -217,9 +217,9 @@ function _draw()
 
         --draw splashscreen at start
         if splashmenu == true then 
-            palt(10,true)
+            palt(15,true)
             palt(0,false)
-            spr(83,screenx+19,screeny+2,11,3)
+            spr(81,screenx+11,screeny+2,13,3)
             palt()
         end
         

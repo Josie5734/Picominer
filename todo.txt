@@ -5,7 +5,6 @@ current tasks:
         have a state for splash on/off 
         starts as on, puts the splash screen at the top, press any button to start - state off 
 
-
 todo:
 
     sound effects + music

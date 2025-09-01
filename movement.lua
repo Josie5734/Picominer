@@ -38,13 +38,13 @@ function robomove()
 
     if btnp(2) and robot.underground and not robot.falling then --UP 
         if mget(robot.celx,robot.cely-1) != 65 and mget(robot.celx,robot.cely-1) != 71 then --if block above is not stone or sprite 71(empty sprite used as stone stand in during falling animation, removed once stone starts falling)
-            if mget(robot.celx, robot.cely) != 113 then --if current block is not ladder
+            if mget(robot.celx, robot.cely) != 72 then --if current block is not ladder
                 if stats.current.ladders > 0 then --if ladder counter > 0 
                     stats.current.ladders -= 1 --remove 1 ladder from inventory
-                    if mget(robot.celx,robot.cely) == 114 then --if block is a support
-                        mset(robot.celx,robot.cely,98) --place a supported ladder
+                    if mget(robot.celx,robot.cely) == 73 then --if block is a support
+                        mset(robot.celx,robot.cely,74) --place a supported ladder
                     elseif mget(robot.celx,robot.cely) == 0 then --if block is empty
-                        mset(robot.celx, robot.cely, 113) --place a normal ladder  
+                        mset(robot.celx, robot.cely, 72) --place a normal ladder  
                     end --no check for support ladders, should just go up as if it is an existing ladder
                     if checkflag("up",2) then --if block is jelpiblock, spawn jelpi
                         jelpi.alive = true
@@ -207,8 +207,8 @@ function placesupport()
         if btnp(4) then --Z to place support 
             if fget(mget(robot.celx,robot.cely+1),3) or fget(mget(robot.celx,robot.cely+1),0) then --if block below is support or solid
                 if fget(mget(robot.celx,robot.cely),3) then --if flag for cell is 3(support or ladder support) then
-                    if mget(robot.celx,robot.cely) == 98 then --if block is a support ladder
-                        mset(robot.celx,robot.cely,113) --set to just a ladder
+                    if mget(robot.celx,robot.cely) == 74 then --if block is a support ladder
+                        mset(robot.celx,robot.cely,72) --set to just a ladder
                         stats.current.supports += 1 --add support to inventory
                     else --else block is a regular support
                         mset(robot.celx,robot.cely,0) --set to nothing
@@ -216,11 +216,11 @@ function placesupport()
                     end
                 else --block is not already a support
                     if stats.current.supports > 0 then --if have supports in inventory
-                        if mget(robot.celx,robot.cely) == 113 then --if block is ladder
-                            mset(robot.celx,robot.cely,98) --set to support ladder
+                        if mget(robot.celx,robot.cely) == 72 then --if block is ladder
+                            mset(robot.celx,robot.cely,74) --set to support ladder
                             stats.current.supports -= 1 --use 1 support
                         else --else it is empty
-                            mset(robot.celx,robot.cely,114) --set block to support
+                            mset(robot.celx,robot.cely,73) --set block to support
                             stats.current.supports -= 1 --use 1 support
                         end
                     end

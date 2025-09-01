@@ -9,7 +9,7 @@ function fallingcheck(xx,yy) --xx,yy is the robot celx and cely-1
     local crying = false
 
     --check if block above is stone
-    if block == 65 or block == 114 or block == 98 then --if block above is stone or support
+    if block == 65 or block == 73 or block == 74 then --if block above is stone or support
 
         --create stone object
         local object = {
@@ -35,9 +35,9 @@ function fallingupdate(o)
 
     --remove map block where object is at start
     if o.timer == 0 then 
-        if o.sprite == 98 then --in specific case of support ladders
-            mset(o.celx,o.cely,113) --set the block to just a ladder
-            o.sprite = 114 --set the object to just a support so only the support falls
+        if o.sprite == 74 then --in specific case of support ladders
+            mset(o.celx,o.cely,72) --set the block to just a ladder
+            o.sprite = 73 --set the object to just a support so only the support falls
         elseif o.sprite == 65 then --if object is stone
             mset(o.celx,o.cely,71) --an empty sprite with the 0 flag from stone, prevents the player from being able to move up through the stone
         else --object is not a support ladder
@@ -57,7 +57,7 @@ function fallingupdate(o)
     --collision to break ladders when halfway over them and to squish the robot
     if o.sprite == 65 then --only applies to stone object
         if o.y % 8 == 4 then --if stone is halfway over block
-            if mget(o.celx,o.cely+1) == 113 then --if block is ladder
+            if mget(o.celx,o.cely+1) == 72 then --if block is ladder
                 mset(o.celx,o.cely+1,0) --remove ladder
             end
             if robot.x == o.x and robot.y == o.y + 4 then --if robot is in same x pos and 4 pixels below top of stone
@@ -74,8 +74,8 @@ function fallingupdate(o)
             if fget(mget(o.celx,o.cely+1),0) == false and fget(mget(o.celx,o.cely+1),3) == false then --collision detection, checks flag of map cel below current for either 0 or 3 (solid block or support)
                 o.y += 1 --move down one pixel
             else --if flag is 0 or 3 (there is a block/support there) - end of falling sequence
-                if o.sprite == 114 and mget(o.celx,o.cely) == 113 then --if the sprite is a support and final block is a ladder
-                    mset(o.celx,o.cely,98) --set block to support ladder
+                if o.sprite == 73 and mget(o.celx,o.cely) == 72 then --if the sprite is a support and final block is a ladder
+                    mset(o.celx,o.cely,74) --set block to support ladder
                 else --else empty block, set to stone or support
                     mset(o.celx,o.cely,o.sprite) --set the map tile to object
                 end

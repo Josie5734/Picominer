@@ -20,7 +20,7 @@ function drawui()
     line(x + 19, y, x + 19, uibar.by, 11) --divider
 
     --supports
-    spr(114, x + 19, toprow)
+    spr(73, x + 19, toprow)
     if stats.current.supports < 10 then --put a 0 before the number if it is single digits
         print("0" .. stats.current.supports, x + 26, toprow, 6)
     else
