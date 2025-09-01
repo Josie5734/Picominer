@@ -16,23 +16,15 @@ current tasks:
         reset supports when going to surface
         added supports to shop upgrades
 
+        updated stone falling system to be a general falling object system, now incorporates supports and support ladders
+
 
 
 
     current:
-        update the stone fall system to also incorporate the supports
-            change the stone objects list to just fallingobjects list
-            change stonecheck to fallcheck and make it check for supports and support ladders, add those objects to fallingobjects
-                add a new val in object table for the sprite number to be used 
-            change stoneupdate to fallupdate
-                add if statement on the breaking ladders section to only apply it to stone
-            change stonedraw to fallingdraw
-
-        added the flag check for supports in the collision check, is currently unused because supports are not added yet      
-
+        make falling system check the block above a just triggered object to see if it can fall too
+            should trigger a chain reaction for stacks of stone/supports
     todo:
-        support placement, collision, upgrade and other related stuff
-        also needs to check for any stone above the current stone - chain reaction of the check function
 
 todo:
     

@@ -7,7 +7,8 @@
 #include actions.lua
 #include ui.lua
 #include stats.lua 
-#include shop.lua]]
+#include shop.lua
+#include fallingobjs.lua]]
 
 --flags: 0 = collide, 1 = can stand ontop, 2 = jelpiblock, 3 = support, 7 = mineable
 
@@ -28,8 +29,8 @@ function _init()
     mset(world.jelpix, world.jelpiy, 70)
     printh("world generated")
 
-    --list for falling stone objects
-    stoneobjs = {}
+    --list for falling objects
+    fallingobjs = {}
     --has x and y pos, timer values for events
 
     --create robot character
@@ -168,13 +169,13 @@ function _update()
         else jelpidance() end --else saved, do dance animation
     end
 
-    --falling stone updating
+    --falling object updating
     local i, j = 1, 1 --used for iterating through object list (cant use del() since objects are not uniquely named)
-    while (stoneobjs[i]) do --loop through all the objects in the list
-        if not stoneobjs[i]:update() then --if updating stone object returns false on the "finished" value
-            if (i!=j) stoneobjs[j]=stoneobjs[i] stoneobjs[i]=nil --shift objects if necessary ?
+    while (fallingobjs[i]) do --loop through all the objects in the list
+        if not fallingobjs[i]:update() then --if updating object returns false on the "finished" value
+            if (i!=j) fallingobjs[j]=fallingobjs[i] fallingobjs[i]=nil --shift objects if necessary ?
             j += 1
-        else stoneobjs[i]=nil end --if stone update does return true on "finished", make that object nil (delete it)
+        else fallingobjs[i]=nil end --if object update does return true on "finished", make that object nil (delete it)
         i += 1 --iterate to next object
     end
 
@@ -217,8 +218,8 @@ function _draw()
         end
     end
 
-    --falling stone sprite drawing
-    for o in all(stoneobjs) do o:draw() end --do the draw function for every current stone object
+    --falling object sprite drawing
+    for o in all(fallingobjs) do o:draw() end --do the draw function for every current object
 
     --draw ui above or below ground
     if robot.underground then
@@ -295,79 +296,4 @@ function respawn() --reset the robot back to the top
     uibar.ty = screeny + 111 --y for top left pixel of border edge
     uibar.by = screeny + 127 -- y for bottom right pixel of border edge
     
-end
-
-
---when mining, checks if block above is stone 
-function stonecheck()
-
-    --check if block above is stone
-    if mget(robot.celx, robot.cely - 1) == 65 then --if block above is stone
-
-        --create stone object
-        local stone = {
-            x = robot.x, y = robot.y - 8, --position of stone in x,y for specific movements
-            celx = robot.celx, cely = robot.cely - 1, --map cel of stone
-            timer = 0, --tracks how long the stone has been spawned for, used to decide what to do with it
-            finished = false, --stone has reached the final placement and object is ready to be removed
-            update = stoneupdate, draw = stonedraw, --the update function for the stone
-        }
-        add(stoneobjs,stone) --add new object to the stone objects list
-
-    end
-
-end
-
---the update function for the stone objects  
-function stoneupdate(s)
-
-    --remove map block where stone is at start
-    if s.timer == 0 then 
-        mset(s.x/8,s.y/8,0)
-    end
-
-    --initial wobble animation
-    if s.timer > 1 and s.timer <= 60 then --for the first 60 frames (s seconds)
-        if s.timer % 5 == 0 and s.timer % 10 != 0 then --if frames is a multiple of 5 but not 10 e.g 5,15,25
-            s.y += 1 --move block one pixel down
-        elseif s.timer % 10 == 0 then --if frames is a multiple of 10 e.g 10,20,30
-            s.y -= 1 --move back up 1 pixel
-        end
-    end
-
-    --collision to break ladders when halfway over them and to squish the robot
-    if s.y % 8 == 4 then --if stone is halfway over block
-        if mget(s.celx,s.cely+1) == 113 then --if block is ladder
-            mset(s.celx,s.cely+1,0) --remove ladder
-        end
-        if robot.x == s.x and robot.y == s.y + 4 then --if robot is in same x pos and 4 pixels below top of stone
-            robot.alive = false --kill robot
-        end
-    end
-
-    --falling sequence   - 1 pixel every 4 frames, until collision with block below
-    if s.timer > 60 then --after 60 frames
-        if s.timer % 2 == 0 then --every 4 frames
-            if fget(mget(s.celx,s.cely+1),0) == false or fget(mget(s.celx,s.cely+1),3) then --collision detection, checks flag of map cel below current for either 0 or 3 (solid block or support)
-                s.y += 1 --move down one pixel
-            else --if flag is 0 (there is a block there) - end of falling sequence
-                mset(s.celx,s.cely,65) --set the map tile to stone
-                s.finished = true --set finished flag to true
-            end
-        end
-        --update the current cel of the stone while falling
-        s.cely = (s.y - (s.y % 8)) / 8 
-    end
-
-    s.timer += 1 --iterate timer 
-    
-    
-
-    return s.finished --return the state of the object
-
-end
-
---draw the stone as a sprite, used for the FOR to be able to loop through objects
-function stonedraw(s) 
-    spr(65,s.x,s.y)
 end

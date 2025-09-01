@@ -37,7 +37,7 @@ function robomove()
     end
 
     if btnp(2) and robot.underground and not robot.falling then --UP 
-        if mget(robot.celx, robot.cely - 1) != 65 then --if block above is not stone
+        if mget(robot.celx, robot.cely - 1) != 65 then --if block above is not objects
             if mget(robot.celx, robot.cely) != 113 then --if current block is not ladder
                 if stats.current.ladders > 0 then --if ladder counter > 0 
                     stats.current.ladders -= 1 --remove 1 ladder from inventory
@@ -164,7 +164,7 @@ function moveleft()
     uibar.tx -=8 --move ui
     stats.current.energy -= robot.ecost --use energy for moving
     robot.direction = "left" --direction moved
-    stonecheck() --check for falling stone
+    fallingcheck() --check for falling objects
 end
 
 function moveright()
@@ -175,8 +175,8 @@ function moveright()
     screenx += 8  --stops the clipping rectangle from offsetting during movement
     uibar.tx +=8 --move ui
     stats.current.energy -= robot.ecost
-    robot.direction = "right" --direction movedstone
-    stonecheck() --check for falling stone
+    robot.direction = "right" --direction moved
+    fallingcheck() --check for falling objects
 end
 
 function moveup()
@@ -188,7 +188,7 @@ function moveup()
     uibar.by -= 8
     robot.direction = "up" --direction moved
     if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
-    stonecheck() --check for falling stone
+    fallingcheck() --check for falling objects
 end
 
 function movedown()
@@ -200,7 +200,7 @@ function movedown()
     uibar.by += 8
     robot.direction = "down" --direction moved
     stats.current.energy -= robot.ecost
-    stonecheck() --check for falling stone
+    fallingcheck() --check for falling objects
 end
 
 --support placement
