@@ -1,36 +1,7 @@
 current tasks:
 
-    stone gravity + supports functionality and shop upgrade option
-
-    so far: 
-        created list for stone objects, with update and draw functions to update and draw each objects (if any)
-        function to check the block above when mining and create a new object if it is stone 
-        function to animate the stone and then make it fall
-        made falling feature better so that the blocks can now fall offscreen - pixel collision was detecting the black circle and triggering a collision, system now uses the map cels to see the next cell and choose to keep moving or no
-        destroys ladders when falling
-        squishing the robot when falling  
-        status message - default when underground - ("Z - place support")
-        new sprite for support + ladder
-        press z to place or remove a support
-        supports cannot be placed without a support or solid block below them
-        reset supports when going to surface
-        added supports to shop upgrades
-
-        updated stone falling system to be a general falling object system, now incorporates supports and support ladders
-
-        falling system now detects vertical stacks of objects
-        fixed it to actually detect supports when falling, stone now interacts with them
-        can no longer walk into block that stone was on whilst it is in the beginning of the falling animation
-
-
-    current:
-        
-    todo:
 
 todo:
-    
-    stone gravity at some point to make supports actually have a use (putting off, seems complicated, could use exisitng gravity check)
-        would also have to add supports to upgrade system if added
 
     sound effects + music
 
@@ -72,6 +43,8 @@ bug list:
         could be fixed by having a check in the left right move that only works if the robot.y is divisible by 8
 
 done so far:
+
+    stone gravity + supports functionality and shop upgrade option
 
     jelpi and jelpi block functionality
 
