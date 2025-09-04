@@ -198,15 +198,14 @@ function _update()
     end
 
     --music
-    printh(musiccount)
     if musiccount <= 0 then --if musiccount has counted down fully
         if musicplaying == true then --if music is playing
             musicplaying = false --set playing to false
-            musiccount = rnd(3201) --reset counter
+            musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
             music(-1, rnd(1001)) --stop playing, fade out of up to 1 second
         else --else if music not playing
             musicplaying = true --set playing to true
-            musiccount = rnd(3201) --reset counter
+            musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
             music(0,rnd(1001),3) --play pattern 0 (leads  onto 1), fade in up to 1 second, reserve channels 1 and 2
         end
     else --if musiccount is still counting
@@ -343,3 +342,14 @@ function respawn() --reset the robot back to the top
     uibar.by = screeny + 127 -- y for bottom right pixel of border edge
     
 end
+
+--[[
+music:     -uses channel 0 + 1
+
+    music track 1 - pattern 00 & 01
+
+sfx:       -uses channel 2 + 3
+
+    sfx 32 - notes 0-2 = movement sfx
+
+]]

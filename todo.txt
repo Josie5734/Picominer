@@ -1,9 +1,9 @@
 current tasks:
 
-    sound effects + music
+    sound effects + music (all in E major hopefully, maybe E minor in underground?)
 
     sound effects:
-        moving - a sound that plays every time the robot moves into empty space
+        X - moving - a sound that plays every time the robot moves into empty space
         mining - sound for mining dirt, ores, failing to mine stone
         supports - sound for placing/removing supports
         falling - sound for stone/support shaking + impacting after falling
@@ -13,9 +13,9 @@ current tasks:
         surfacing - getting to surface with ores in inventory 
 
     music:
-        one loop for above ground and one for below ground
+        maybe one loop for above ground and one for below ground
 
-        cool initial bars done on sfx 04 using an E major - aiming for a phrgian dominant but havent used the b6 or b2 really yet
+        currently just have one loop overall
 
 todo:
 

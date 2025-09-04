@@ -166,6 +166,8 @@ function moveleft()
     uibar.tx -=8 --move ui
     stats.current.energy -= robot.ecost --use energy for moving
     robot.direction = "left" --direction moved
+
+    sfx(32,2,0,3) --movement sound effect
 end
 
 function moveright()
@@ -177,6 +179,8 @@ function moveright()
     uibar.tx +=8 --move ui
     stats.current.energy -= robot.ecost
     robot.direction = "right" --direction moved
+
+    sfx(32,2,0,3) --movement sound effect
 end
 
 function moveup()
@@ -188,6 +192,8 @@ function moveup()
     uibar.by -= 8
     robot.direction = "up" --direction moved
     if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
+
+    sfx(32,2,0,3) --movement sound effect
 end
 
 function movedown()
@@ -199,6 +205,8 @@ function movedown()
     uibar.by += 8
     robot.direction = "down" --direction moved
     stats.current.energy -= robot.ecost
+
+    sfx(32,2,0,3) --movement sound effect
 end
 
 --support placement
