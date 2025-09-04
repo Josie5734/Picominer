@@ -111,11 +111,16 @@ function _init()
     --camera set to robot position
     scrollcam()
 
-    --clear last thing
-    cls()
+    --music
+    music(0,0,3) --play pattern 0 (leads  onto 1), no fade in, reserve channels 1 and 2
+    musiccount = 1800 --counter for how long until music either stops or starts playing, usually max of 2 minutes, starts at forced 1 minute
+    musicplaying = true --bool for if music is currently playing
 
     --credits menu
     creditsmenuinit()
+
+    --clear last thing
+    cls()
 end
 
 
@@ -192,6 +197,21 @@ function _update()
         i += 1 --iterate to next object
     end
 
+    --music
+    printh(musiccount)
+    if musiccount <= 0 then --if musiccount has counted down fully
+        if musicplaying == true then --if music is playing
+            musicplaying = false --set playing to false
+            musiccount = rnd(3201) --reset counter
+            music(-1, rnd(1001)) --stop playing, fade out of up to 1 second
+        else --else if music not playing
+            musicplaying = true --set playing to true
+            musiccount = rnd(3201) --reset counter
+            music(0,rnd(1001),3) --play pattern 0 (leads  onto 1), fade in up to 1 second, reserve channels 1 and 2
+        end
+    else --if musiccount is still counting
+        musiccount -= 1 --iterate counter
+    end
 
 end
 
