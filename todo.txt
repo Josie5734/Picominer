@@ -4,7 +4,7 @@ current tasks:
 
     sound effects:
         X - moving - a sound that plays every time the robot moves into empty space
-        mining - sound for mining dirt, ores, failing to mine stone
+        X - mining - sound for mining dirt, ores, failing to mine stone
         supports - sound for placing/removing supports
         falling - sound for stone/support shaking + impacting after falling
         jelpi - mine jelpi, save jelpi 
@@ -16,6 +16,8 @@ current tasks:
         maybe one loop for above ground and one for below ground
 
         currently just have one loop overall
+
+        music toggle in the menu - tried implementing, cant get it to work currently, will revisit
 
 todo:
 

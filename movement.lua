@@ -15,9 +15,11 @@ function robomove()
                 end
                 mine(robot.celx - 1, robot.cely) -- dig block  
                 moveleft() --move
-            else uibar.status = "unbreakable" end --status message for not breakable
+                sfx(32,-1,5,2) --mining ore sfx
+            else uibar.status = "unbreakable" sfx(32,-1,7,1) end --status message + sfx for not breakable 
         else --if collision != true
             moveleft() --move
+            sfx(32,-1,0,3) --movement sfx
         end
     end
 
@@ -30,9 +32,11 @@ function robomove()
                 end
                 mine(robot.celx + 1, robot.cely) 
                 moveright()
-            else uibar.status = "unbreakable" end --status message for not breakable
+                sfx(32,-1,5,2) --mining ore sfx
+            else uibar.status = "unbreakable" sfx(32,-1,7,1) end --status message + sfx for not breakable 
         else
             moveright()
+            sfx(32,-1,0,3) --movement sfx
         end
     end
 
@@ -55,12 +59,13 @@ function robomove()
                     end 
 
                     moveup()  
+                    sfx(32,-1,0,3) --movement sfx
                 end --cannot move up
             else --block is ladder
-                if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) end --mine block above if it isnt air/ladder/support
+                if checkflag("up",6) == false then mine(robot.celx, robot.cely - 1) sfx(32,-1,5,2) end --mine block above if it isnt air/ladder/support + play mining sfx
                 moveup()  
             end
-        else uibar.status = "unbreakable" end --status message for not breakable
+        else uibar.status = "unbreakable" sfx(32,-1,7,1) end --status message + sfx for not breakable 
     end
 
     if btnp(3) then --down
@@ -72,9 +77,11 @@ function robomove()
                 end
                 mine(robot.celx, robot.cely + 1) 
                 movedown()
-            else uibar.status = "unbreakable" end --status message for not breakable
+                sfx(32,-1,5,2) --mine ore sound effect
+            else uibar.status = "unbreakable" sfx(32,-1,7,1) end --status message + sfx for not breakable 
         else
             movedown()
+            sfx(32,-1,0,3) --movement sfx
         end
     end 
     
@@ -106,6 +113,7 @@ function mine(xx,yy) --xx, yy is block to be mined
             end
             stats.current.inventoryvalue += money --add money value to inventory
             printh("mined " .. block)
+            sfx(32,-1,5,2) --sound effect for ore
         else printh("inventory full, ore destroyed") end --inventory is full
         for ore,vals in pairs(orevalues) do --iterate to find energy usage for an ore
             if vals.sprite == block then stats.current.energy -= robot.ecost * vals.ecost end --remove energy 
@@ -166,8 +174,6 @@ function moveleft()
     uibar.tx -=8 --move ui
     stats.current.energy -= robot.ecost --use energy for moving
     robot.direction = "left" --direction moved
-
-    sfx(32,2,0,3) --movement sound effect
 end
 
 function moveright()
@@ -179,8 +185,6 @@ function moveright()
     uibar.tx +=8 --move ui
     stats.current.energy -= robot.ecost
     robot.direction = "right" --direction moved
-
-    sfx(32,2,0,3) --movement sound effect
 end
 
 function moveup()
@@ -192,8 +196,6 @@ function moveup()
     uibar.by -= 8
     robot.direction = "up" --direction moved
     if fget(mget(robot.celx, robot.cely-1),1) then stats.current.energy -= robot.ecost end --dont take energy if block above is surface
-
-    sfx(32,2,0,3) --movement sound effect
 end
 
 function movedown()
@@ -205,8 +207,6 @@ function movedown()
     uibar.by += 8
     robot.direction = "down" --direction moved
     stats.current.energy -= robot.ecost
-
-    sfx(32,2,0,3) --movement sound effect
 end
 
 --support placement

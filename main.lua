@@ -113,8 +113,27 @@ function _init()
 
     --music
     music(0,0,3) --play pattern 0 (leads  onto 1), no fade in, reserve channels 1 and 2
+    musictoggle = "on" --setting for player toggling music on/off
     musiccount = 1800 --counter for how long until music either stops or starts playing, usually max of 2 minutes, starts at forced 1 minute
     musicplaying = true --bool for if music is currently playing
+    --[[   --supposed to be a menuitem for toggling music on/off but i cant get it to work
+    menuitem(2,"music: " .. musictoggle,musicmenu) --add a menu item to toggle music
+    function musicmenu(b) --function for toggling music from the menu
+        
+        if musictoggle == "on" then 
+            musictoggle="off" 
+            musicplaying = false 
+            music(-1) 
+        else  
+            musictoggle = "on" 
+            music(0,0,3) 
+            musiccount = 1800 
+            musicplaying = true 
+        end 
+        menuitem(2,"music: " .. musictoggle)
+        return true 
+    end
+    ]]
 
     --credits menu
     creditsmenuinit()
@@ -198,18 +217,20 @@ function _update()
     end
 
     --music
-    if musiccount <= 0 then --if musiccount has counted down fully
-        if musicplaying == true then --if music is playing
-            musicplaying = false --set playing to false
-            musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
-            music(-1, rnd(1001)) --stop playing, fade out of up to 1 second
-        else --else if music not playing
-            musicplaying = true --set playing to true
-            musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
-            music(0,rnd(1001),3) --play pattern 0 (leads  onto 1), fade in up to 1 second, reserve channels 1 and 2
+    if musictoggle == "on" then --if music is toggled on
+        if musiccount <= 0 then --if musiccount has counted down fully
+            if musicplaying == true then --if music is playing
+                musicplaying = false --set playing to false
+                musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
+                music(-1, rnd(1001)) --stop playing, fade out of up to 1 second
+            else --else if music not playing
+                musicplaying = true --set playing to true
+                musiccount = flr(rnd(3201)) + 900 --reset counter, minimum 30 seconds
+                music(0,rnd(1001),3) --play pattern 0 (leads  onto 1), fade in up to 1 second, reserve channels 1 and 2
+            end
+        else --if musiccount is still counting
+            musiccount -= 1 --iterate counter
         end
-    else --if musiccount is still counting
-        musiccount -= 1 --iterate counter
     end
 
 end
@@ -350,6 +371,9 @@ music:     -uses channel 0 + 1
 
 sfx:       -uses channel 2 + 3
 
-    sfx 32 - notes 0-2 = movement sfx
+    sfx 32: 
+        notes 0-2 = standard movement 
+        notes 5-6 = collecting ore
+        notes 8 = trying to mine stone
 
 ]]
