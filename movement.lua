@@ -130,15 +130,17 @@ function gravity()
     --if block below does not have flag 1 (ladder) and does not have flag 0 (solid)
     --move robot down by 2 pixels until it stands on one that does
     if not fget(mget(robot.celx, robot.cely + 1),1) and not checkflag("down",0) then 
-        robot.y += 2
-        robot.cely += 0.25 --move cell position
-        animate(robot.y)
-        screeny += 2  --stops the clipping rectangle from offsetting during movement
-        uibar.ty += 2 --move ui
-        uibar.by += 2
-        robot.falling = true --bool for falling to prevent placing ladders while falling
-        robot.direction = "down" --set direction 
-        stats.current.falldist += 0.25 --add blocks fallen
+        if pget(robot.x,robot.y+8) != 6 then
+            robot.y += 2
+            robot.cely += 0.25 --move cell position
+            animate(robot.y)
+            screeny += 2  --stops the clipping rectangle from offsetting during movement
+            uibar.ty += 2 --move ui
+            uibar.by += 2
+            robot.falling = true --bool for falling to prevent placing ladders while falling
+            robot.direction = "down" --set direction 
+            stats.current.falldist += 0.25 --add blocks fallen
+        end
     else 
         if stats.current.falldist > stats.max.falldist then --check falldist
             robot.alive = false --die if fell too far
