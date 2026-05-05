@@ -1,7 +1,7 @@
 
 # Picominer
 
-Picominer is my first game made in Pico 8
+Picominer is my first game made in Pico 8 and can be played on the [Lexaloffle BBS here](https://www.lexaloffle.com/bbs/?tid=151358)
 
 it is based off an old mobile game i used to play called RoboMiner
 
